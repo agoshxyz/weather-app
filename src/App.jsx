@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import image from './assets/snowy-5.svg'
+import WeatherStatusCode from './WeatherStatusCode'
 function App () {
   const [isLoading, setIsLoading] = useState(false)
   const [currentLatitude, setCurrentLatitude] = useState(null)
@@ -71,6 +71,8 @@ function App () {
 
   return (
     <>
+      {/* <WeatherStatusCode/> */}
+
       <div className='bg-gradient-to-r from-primary text-primaryText text-center flex flex-col justify-center items-center'>
         <div className='mb-2 mt-10'>
           <input
@@ -87,10 +89,16 @@ function App () {
                 <p className='text-gray-800 font-bold text-6xl'>
                   {currentWeatherData[0].city_name}
                 </p>
-                <img src={image} className='w-36 h-36' />
+                <WeatherStatusCode
+                  statusCode={currentWeatherData[0].weather.code}
+                />
                 <p className='text-gray-800 font-bold text-7xl'>
-                  {currentWeatherData[0].temp}
+                  {Math.round(currentWeatherData[0].temp)}
                   <span className='text-6xl'>°C</span>
+                </p>
+                <p>
+                  Feels like {Math.round(currentWeatherData[0].app_temp)}
+                  <span>°C</span>
                 </p>
                 <p className='text-gray-800 font-bold text-xl'>
                   {currentWeatherData[0].weather.description}
@@ -99,7 +107,7 @@ function App () {
             )}
           </div>
         )}
-        <div className='flex items-center justify-center'>
+        <div className='flex items-center justify-center mb-2 mt-2'>
           <button
             className={`rounded-l-lg py-2 px-4 ${
               selectedOption === 'hourly'
@@ -121,7 +129,7 @@ function App () {
             Daily
           </button>
         </div>
-        <div className='flex gap-2 px-4'>
+        <div className='flex gap-2 overflow-auto w-96 mt-2'>
           {hourlyForecastData &&
             selectedOption === 'hourly' &&
             hourlyForecastData.map((data, index) => {
@@ -131,7 +139,7 @@ function App () {
                   key={index}
                 >
                   <p className='text-gray-800 font-bold text-lg'>
-                    {data.temp}
+                    {Math.round(data.temp)}
                     <span className='text-xl'>°C</span>
                   </p>
                 </div>
@@ -149,7 +157,7 @@ function App () {
                     {data.datetime}
                   </p>
                   <p className='text-gray-800 font-bold text-lg'>
-                    {data.temp}
+                    {Math.round(data.temp)}
                     <span className='text-xl'>°C</span>
                   </p>
                 </div>

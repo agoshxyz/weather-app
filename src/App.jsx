@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import WeatherStatusCode from './WeatherStatusCode'
 import HourlyForecast from './HourlyForecast'
+import LoadingScreen from './LoadingScreen'
 function App () {
   const [isLoading, setIsLoading] = useState(false)
   const [currentLatitude, setCurrentLatitude] = useState('44.43225') //Bucharest lat
@@ -73,17 +74,14 @@ function App () {
   return (
     <>
       {/* <WeatherStatusCode/> */}
-
-      <div className='bg-gradient-to-r from-primary text-primaryText text-center flex flex-col justify-center items-center'>
+{isLoading ? <LoadingScreen /> :(
+      <div className='bg-gradient-to-r from-primary text-primaryText text-center flex flex-col justify-center items-center w-full'>
         <div className='mb-2 mt-10'>
           <input
             className='border rounded-lg w-96 px-3 py-1 outline-none'
             placeholder='Search for any city'
           />
         </div>
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
           <div className='w-96 h-4/6 rounded-2xl'>
             {currentWeatherData && (
               <div className='flex flex-col items-center justify-center'>
@@ -108,7 +106,6 @@ function App () {
               </div>
             )}
           </div>
-        )}
         <div className='flex items-center justify-center mb-2 mt-2'>
           <button
             className={`rounded-l-lg py-2 px-4 ${
@@ -168,6 +165,7 @@ function App () {
             })}
         </div>
       </div>
+      )}
     </>
   )
 }

@@ -3,7 +3,8 @@ import WeatherStatusCode from './WeatherStatusCode'
 export default function HourlyForecast ({
   localTimeStamp,
   temperature,
-  statusCode
+  statusCode,
+  weatherDescription
 }) {
   console.log(localTimeStamp)
   const hour = moment(localTimeStamp).format('HH')
@@ -14,6 +15,7 @@ export default function HourlyForecast ({
     {hour}
     </div>
       <WeatherStatusCode statusCode={statusCode}/>
+      {weatherDescription}
       <p className='text-gray-800 font-bold text-lg mt-2'>
         {Math.round(temperature)}
         <span className='text-xl'>°C</span>

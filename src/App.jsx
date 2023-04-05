@@ -131,7 +131,7 @@ function App () {
               Daily
             </button>
           </div>
-          <div className='flex items-center justify-center gap-2 overflow-auto w-5/6 mt-2'>
+          <div className={`flex ${selectedOption === 'daily' && 'justify-center'} gap-2 overflow-auto w-5/6 mt-2`}>
             {hourlyForecastData &&
               selectedOption === 'hourly' &&
               hourlyForecastData.map((data, index) => {
@@ -141,6 +141,7 @@ function App () {
                     key={index}
                   >
                     <HourlyForecast
+                      weatherDescription = {data.weather.description}
                       statusCode={data.weather.code}
                       localTimeStamp={data.timestamp_local}
                       temperature={data.temp}
@@ -153,7 +154,7 @@ function App () {
               weeklyWeatherData.map((data, index) => {
                 return (
                   <div
-                    className='p-2 flex flex-col justify-between h-1/6 rounded-2xl border'
+                    className='p-2 flex flex-col h-1/6 rounded-2xl border'
                     key={index}
                   >
                     <DailyForecast date={data.valid_date} temperature={data.temp}/>

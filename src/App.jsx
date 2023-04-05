@@ -3,6 +3,7 @@ import axios from 'axios'
 import WeatherStatusCode from './WeatherStatusCode'
 import HourlyForecast from './HourlyForecast'
 import LoadingScreen from './LoadingScreen'
+import DailyForecast from './DailyForecast'
 function App () {
   const [isLoading, setIsLoading] = useState(false)
   const [currentLatitude, setCurrentLatitude] = useState('44.43225') //Bucharest lat
@@ -155,13 +156,7 @@ function App () {
                     className='p-2 flex flex-col justify-between h-1/6 rounded-2xl border'
                     key={index}
                   >
-                    <p className='text-gray-800 font-bold text-lg'>
-                      {data.datetime}
-                    </p>
-                    <p className='text-gray-800 font-bold text-lg'>
-                      {Math.round(data.temp)}
-                      <span className='text-xl'>°C</span>
-                    </p>
+                    <DailyForecast date={data.valid_date} temperature={data.temp}/>
                   </div>
                 )
               })}

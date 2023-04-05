@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import WeatherStatusCode from './WeatherStatusCode'
+import HourlyForecast from './HourlyForecast'
 function App () {
   const [isLoading, setIsLoading] = useState(false)
-  const [currentLatitude, setCurrentLatitude] = useState(null)
-  const [currentLongitude, setCurrentLongitude] = useState(null)
+  const [currentLatitude, setCurrentLatitude] = useState('44.43225') //Bucharest lat
+  const [currentLongitude, setCurrentLongitude] = useState('26.10626') //Bucharest lon
   const [currentWeatherData, setCurrentWeatherData] = useState(null)
   const [weeklyWeatherData, setWeeklyWeatherData] = useState(null)
   const [hourlyForecastData, setHourlyForecastData] = useState(null)
@@ -90,6 +91,7 @@ function App () {
                   {currentWeatherData[0].city_name}
                 </p>
                 <WeatherStatusCode
+                  className='w-36'
                   statusCode={currentWeatherData[0].weather.code}
                 />
                 <p className='text-gray-800 font-bold text-7xl'>
@@ -135,13 +137,14 @@ function App () {
             hourlyForecastData.map((data, index) => {
               return (
                 <div
-                  className='p-2 flex flex-col justify-between h-1/6 rounded-2xl border'
+                  className='py-2 px-8   flex flex-col justify-between h-1/6 rounded-2xl border'
                   key={index}
                 >
-                  <p className='text-gray-800 font-bold text-lg'>
-                    {Math.round(data.temp)}
-                    <span className='text-xl'>°C</span>
-                  </p>
+                  <HourlyForecast
+                    statusCode={data.weather.code}
+                    localTimeStamp={data.timestamp_local}
+                    temperature={data.temp}
+                  />
                 </div>
               )
             })}

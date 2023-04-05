@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import HourlyForecast from './HourlyForecast'
-import LoadingScreen from './LoadingScreen'
-import DailyForecast from './DailyForecast'
+import HourlyForecast from './components/HourlyForecast'
+import LoadingScreen from './components/LoadingScreen'
+import DailyForecast from './components/DailyForecast'
+import CurrentWeather from './components/CurrentWeather'
 
-import CurrentWeather from './CurrentWeather'
 function App () {
   const [isLoading, setIsLoading] = useState(false)
   const [currentLatitude, setCurrentLatitude] = useState('44.43225') //Bucharest lat
@@ -91,9 +91,9 @@ function App () {
             {currentWeatherData && (
               <CurrentWeather
                 cityName={currentWeatherData[0].city_name}
-                temperature = {currentWeatherData[0].temp}
-                statusCode = {currentWeatherData[0].weather.code}
-                description = {currentWeatherData[0].weather.description}
+                temperature={currentWeatherData[0].temp}
+                statusCode={currentWeatherData[0].weather.code}
+                description={currentWeatherData[0].weather.description}
                 temperatureFeelsLike={currentWeatherData[0].app_temp}
               />
             )}

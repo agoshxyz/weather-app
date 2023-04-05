@@ -1,12 +1,12 @@
-import lightRain500 from './assets/lightRain.svg'
-import lightShowerRain520 from './assets/lightShowerRain.svg'
-import showerRain521 from './assets/showerRain.svg'
-import heavyShowerRain522 from './assets/heavyShowerRain.svg'
-import lightSnow600 from './assets/lightSnow.svg'
-import snow601 from './assets/snow.svg'
-import heavySnow602 from './assets/heavySnow.svg'
-import mixSnowAndRain610 from './assets/mixSnowAndRain.svg'
-import flurries623 from './assets/flurries.svg'
+import lightRain500 from '../assets/weatherIcons/lightRain.svg'
+import lightShowerRain520 from '../assets/weatherIcons/lightShowerRain.svg'
+import showerRain521 from '../assets/weatherIcons/showerRain.svg'
+import heavyShowerRain522 from '../assets/weatherIcons/heavyShowerRain.svg'
+import lightSnow600 from '../assets/weatherIcons/lightSnow.svg'
+import snow601 from '../assets/weatherIcons/snow.svg'
+import heavySnow602 from '../assets/weatherIcons/heavySnow.svg'
+import mixSnowAndRain610 from '../assets/weatherIcons/mixSnowAndRain.svg'
+import flurries623 from '../assets/weatherIcons/flurries.svg'
 export default function WeatherStatusCode ({ statusCode, className }) {
   let iconImage
   switch (statusCode) {

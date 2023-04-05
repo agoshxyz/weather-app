@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import WeatherStatusCode from './WeatherStatusCode'
 import HourlyForecast from './HourlyForecast'
 import LoadingScreen from './LoadingScreen'
 import DailyForecast from './DailyForecast'
+
+import CurrentWeather from './CurrentWeather'
 function App () {
   const [isLoading, setIsLoading] = useState(false)
   const [currentLatitude, setCurrentLatitude] = useState('44.43225') //Bucharest lat
@@ -12,6 +13,7 @@ function App () {
   const [weeklyWeatherData, setWeeklyWeatherData] = useState(null)
   const [hourlyForecastData, setHourlyForecastData] = useState(null)
   const [selectedOption, setSelectedOption] = useState('hourly')
+  const [favList, setFavList] = useState([])
 
   useEffect(() => {
     const getCurrentLocation = async () => {
@@ -78,7 +80,7 @@ function App () {
       {isLoading ? (
         <LoadingScreen />
       ) : (
-        <div className='bg-primary text-primaryText text-center flex flex-col justify-center items-center w-full'>
+        <div className='h-5/6 bg-primary text-primaryText text-center flex flex-col justify-center items-center w-full'>
           <div className='mb-2 mt-10'>
             <input
               className='border rounded-lg w-96 px-3 py-1 outline-none'
@@ -87,26 +89,13 @@ function App () {
           </div>
           <div className='w-96 h-4/6 rounded-2xl'>
             {currentWeatherData && (
-              <div className='flex flex-col items-center justify-center'>
-                <p className='text-gray-800 font-bold text-6xl'>
-                  {currentWeatherData[0].city_name}
-                </p>
-                <WeatherStatusCode
-                  className='w-36'
-                  statusCode={currentWeatherData[0].weather.code}
-                />
-                <p className='text-gray-800 font-bold text-7xl'>
-                  {Math.round(currentWeatherData[0].temp)}
-                  <span className='text-6xl'>°C</span>
-                </p>
-                <p>
-                  Feels like {Math.round(currentWeatherData[0].app_temp)}
-                  <span>°C</span>
-                </p>
-                <p className='text-gray-800 font-bold text-xl'>
-                  {currentWeatherData[0].weather.description}
-                </p>
-              </div>
+              <CurrentWeather
+                cityName={currentWeatherData[0].city_name}
+                temperature = {currentWeatherData[0].temp}
+                statusCode = {currentWeatherData[0].weather.code}
+                description = {currentWeatherData[0].weather.description}
+                temperatureFeelsLike={currentWeatherData[0].app_temp}
+              />
             )}
           </div>
           <div className='flex items-center justify-center mb-2 mt-2'>
@@ -131,7 +120,11 @@ function App () {
               Daily
             </button>
           </div>
-          <div className={`flex ${selectedOption === 'daily' && 'justify-center'} gap-2 overflow-auto w-5/6 mt-2`}>
+          <div
+            className={`flex ${
+              selectedOption === 'daily' && 'justify-center'
+            } gap-2 overflow-auto w-5/6 mt-2`}
+          >
             {hourlyForecastData &&
               selectedOption === 'hourly' &&
               hourlyForecastData.map((data, index) => {
@@ -141,7 +134,7 @@ function App () {
                     key={index}
                   >
                     <HourlyForecast
-                      weatherDescription = {data.weather.description}
+                      weatherDescription={data.weather.description}
                       statusCode={data.weather.code}
                       localTimeStamp={data.timestamp_local}
                       temperature={data.temp}
@@ -157,7 +150,10 @@ function App () {
                     className='p-2 flex flex-col h-1/6 rounded-2xl border'
                     key={index}
                   >
-                    <DailyForecast date={data.valid_date} temperature={data.temp}/>
+                    <DailyForecast
+                      date={data.valid_date}
+                      temperature={data.temp}
+                    />
                   </div>
                 )
               })}

@@ -6,9 +6,7 @@ export default function HourlyForecast ({
   statusCode,
   weatherDescription
 }) {
-  console.log(localTimeStamp)
   const hour = moment(localTimeStamp).format('HH')
-  console.log(hour)
   return (
     <>
     <div className='mb-2'>

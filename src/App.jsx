@@ -77,7 +77,7 @@ function App () {
       {isLoading ? (
         <LoadingScreen />
       ) : (
-        <div className='bg-gradient-to-r from-primary text-primaryText text-center flex flex-col justify-center items-center w-full'>
+        <div className='bg-primary text-primaryText text-center flex flex-col justify-center items-center w-full'>
           <div className='mb-2 mt-10'>
             <input
               className='border rounded-lg w-96 px-3 py-1 outline-none'
@@ -130,13 +130,13 @@ function App () {
               Daily
             </button>
           </div>
-          <div className='flex gap-2 overflow-auto w-96 mt-2'>
+          <div className='flex items-center justify-center gap-2 overflow-auto w-5/6 mt-2'>
             {hourlyForecastData &&
               selectedOption === 'hourly' &&
               hourlyForecastData.map((data, index) => {
                 return (
                   <div
-                    className='py-2 px-8   flex flex-col justify-between h-1/6 rounded-2xl border'
+                    className='py-2 px-8 flex flex-col justify-between h-1/6 rounded-2xl border'
                     key={index}
                   >
                     <HourlyForecast

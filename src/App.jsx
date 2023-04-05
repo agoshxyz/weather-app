@@ -74,14 +74,16 @@ function App () {
   return (
     <>
       {/* <WeatherStatusCode/> */}
-{isLoading ? <LoadingScreen /> :(
-      <div className='bg-gradient-to-r from-primary text-primaryText text-center flex flex-col justify-center items-center w-full'>
-        <div className='mb-2 mt-10'>
-          <input
-            className='border rounded-lg w-96 px-3 py-1 outline-none'
-            placeholder='Search for any city'
-          />
-        </div>
+      {isLoading ? (
+        <LoadingScreen />
+      ) : (
+        <div className='bg-gradient-to-r from-primary text-primaryText text-center flex flex-col justify-center items-center w-full'>
+          <div className='mb-2 mt-10'>
+            <input
+              className='border rounded-lg w-96 px-3 py-1 outline-none'
+              placeholder='Search for any city'
+            />
+          </div>
           <div className='w-96 h-4/6 rounded-2xl'>
             {currentWeatherData && (
               <div className='flex flex-col items-center justify-center'>
@@ -106,65 +108,65 @@ function App () {
               </div>
             )}
           </div>
-        <div className='flex items-center justify-center mb-2 mt-2'>
-          <button
-            className={`rounded-l-lg py-2 px-4 ${
-              selectedOption === 'hourly'
-                ? 'bg-gray-700 text-white font-bold'
-                : 'bg-gray-300 text-gray-700 font-medium'
-            }`}
-            onClick={() => setSelectedOption('hourly')}
-          >
-            Hourly
-          </button>
-          <button
-            className={`rounded-r-lg py-2 px-4 ${
-              selectedOption === 'daily'
-                ? 'bg-gray-700 text-white font-bold'
-                : 'bg-gray-300 text-gray-700 font-medium'
-            }`}
-            onClick={() => setSelectedOption('daily')}
-          >
-            Daily
-          </button>
+          <div className='flex items-center justify-center mb-2 mt-2'>
+            <button
+              className={`rounded-l-lg py-2 px-4 ${
+                selectedOption === 'hourly'
+                  ? 'bg-gray-700 text-white font-bold'
+                  : 'bg-gray-300 text-gray-700 font-medium'
+              }`}
+              onClick={() => setSelectedOption('hourly')}
+            >
+              Hourly
+            </button>
+            <button
+              className={`rounded-r-lg py-2 px-4 ${
+                selectedOption === 'daily'
+                  ? 'bg-gray-700 text-white font-bold'
+                  : 'bg-gray-300 text-gray-700 font-medium'
+              }`}
+              onClick={() => setSelectedOption('daily')}
+            >
+              Daily
+            </button>
+          </div>
+          <div className='flex gap-2 overflow-auto w-96 mt-2'>
+            {hourlyForecastData &&
+              selectedOption === 'hourly' &&
+              hourlyForecastData.map((data, index) => {
+                return (
+                  <div
+                    className='py-2 px-8   flex flex-col justify-between h-1/6 rounded-2xl border'
+                    key={index}
+                  >
+                    <HourlyForecast
+                      statusCode={data.weather.code}
+                      localTimeStamp={data.timestamp_local}
+                      temperature={data.temp}
+                    />
+                  </div>
+                )
+              })}
+            {weeklyWeatherData &&
+              selectedOption === 'daily' &&
+              weeklyWeatherData.map((data, index) => {
+                return (
+                  <div
+                    className='p-2 flex flex-col justify-between h-1/6 rounded-2xl border'
+                    key={index}
+                  >
+                    <p className='text-gray-800 font-bold text-lg'>
+                      {data.datetime}
+                    </p>
+                    <p className='text-gray-800 font-bold text-lg'>
+                      {Math.round(data.temp)}
+                      <span className='text-xl'>°C</span>
+                    </p>
+                  </div>
+                )
+              })}
+          </div>
         </div>
-        <div className='flex gap-2 overflow-auto w-96 mt-2'>
-          {hourlyForecastData &&
-            selectedOption === 'hourly' &&
-            hourlyForecastData.map((data, index) => {
-              return (
-                <div
-                  className='py-2 px-8   flex flex-col justify-between h-1/6 rounded-2xl border'
-                  key={index}
-                >
-                  <HourlyForecast
-                    statusCode={data.weather.code}
-                    localTimeStamp={data.timestamp_local}
-                    temperature={data.temp}
-                  />
-                </div>
-              )
-            })}
-          {weeklyWeatherData &&
-            selectedOption === 'daily' &&
-            weeklyWeatherData.map((data, index) => {
-              return (
-                <div
-                  className='p-2 flex flex-col justify-between h-1/6 rounded-2xl border'
-                  key={index}
-                >
-                  <p className='text-gray-800 font-bold text-lg'>
-                    {data.datetime}
-                  </p>
-                  <p className='text-gray-800 font-bold text-lg'>
-                    {Math.round(data.temp)}
-                    <span className='text-xl'>°C</span>
-                  </p>
-                </div>
-              )
-            })}
-        </div>
-      </div>
       )}
     </>
   )

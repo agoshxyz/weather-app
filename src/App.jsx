@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { IconContext } from 'react-icons'
+import { MdBookmarkBorder } from 'react-icons/md'
 import HourlyForecast from './components/HourlyForecast'
 import LoadingScreen from './components/LoadingScreen'
 import DailyForecast from './components/DailyForecast'
 import CurrentWeather from './components/CurrentWeather'
-
+import Modal from './components/Modal'
+import FavList from './components/FavList'
 const savedFavorites = localStorage.getItem('favorites')
   ? JSON.parse(localStorage.getItem('favorites'))
   : []
 function App () {
   const [isLoading, setIsLoading] = useState(false)
+  const [isFavShown, setIsFavShown] = useState(false)
   const [currentLatitude, setCurrentLatitude] = useState('44.43225') //Bucharest lat
   const [currentLongitude, setCurrentLongitude] = useState('26.10626') //Bucharest lon
   const [currentWeatherData, setCurrentWeatherData] = useState(null)
@@ -85,14 +89,25 @@ function App () {
       {isLoading ? (
         <LoadingScreen />
       ) : (
-        <div className='h-5/6 bg-primary text-primaryText text-center flex flex-col justify-center items-center w-full'>
-          <div className='mb-2 mt-10'>
+        <div className='h-screen bg-primary text-primaryText text-center flex flex-col justify-center items-center w-full'>
+          <div className='flex item-center gap-1 mb-6'>
             <input
               className='border rounded-lg w-96 px-3 py-1 outline-none'
               placeholder='Search for any city'
             />
+            <IconContext.Provider
+              value={{ className: 'text-3xl text-gray-400 cursor-pointer' }}
+            >
+              <button
+                onClick={() => {
+                  setIsFavShown(true)
+                }}
+              >
+                <MdBookmarkBorder />
+              </button>
+            </IconContext.Provider>
           </div>
-          <div className='w-96 h-4/6 rounded-2xl'>
+          <div className='w-96 rounded-2xl'>
             {currentWeatherData && (
               <CurrentWeather
                 favList={favList}
@@ -139,7 +154,7 @@ function App () {
               hourlyForecastData.map((data, index) => {
                 return (
                   <div
-                    className='py-2 px-8 flex flex-col justify-between h-1/6 rounded-2xl border'
+                    className='py-2 px-8 flex flex-col justify-between rounded-2xl border'
                     key={index}
                   >
                     <HourlyForecast
@@ -156,7 +171,7 @@ function App () {
               weeklyWeatherData.map((data, index) => {
                 return (
                   <div
-                    className='p-2 flex flex-col h-1/6 rounded-2xl border'
+                    className='p-2 flex flex-col rounded-2xl border'
                     key={index}
                   >
                     <DailyForecast
@@ -169,6 +184,14 @@ function App () {
           </div>
         </div>
       )}
+      <Modal
+        isOpen={isFavShown}
+        onClose={() => {
+          setIsFavShown(false)
+        }}
+      >
+        <FavList />
+      </Modal>
     </>
   )
 }

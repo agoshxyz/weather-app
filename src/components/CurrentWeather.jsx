@@ -34,7 +34,7 @@ export default function CurrentWeather ({
   const favorite = isFavorite(lat, lon)
   return (
     <div className='flex flex-col items-center justify-center'>
-      <div className='flex items-center justify-center'>
+      <div className='flex items-center justify-center gap-1 align-middle'>
         <p className='text-gray-800 font-bold text-6xl'>{cityName}</p>
         <FavButton
           lat={lat}

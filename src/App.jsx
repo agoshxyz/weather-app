@@ -9,9 +9,8 @@ import CurrentWeather from './components/CurrentWeather'
 import { WeatherContext } from './contexts/WeatherContext'
 import Modal from './components/Modal'
 import FavList from './components/FavList'
-const savedFavorites = localStorage.getItem('favorites')
-  ? JSON.parse(localStorage.getItem('favorites'))
-  : []
+import SearchInput from './components/SearchInput'
+
 function App () {
   const [isLoading, setIsLoading] = useState(false)
   const [isFavShown, setIsFavShown] = useState(false)
@@ -21,7 +20,13 @@ function App () {
   const [weeklyWeatherData, setWeeklyWeatherData] = useState(null)
   const [hourlyForecastData, setHourlyForecastData] = useState(null)
   const [selectedOption, setSelectedOption] = useState('hourly')
-  const {favList, setFavList} = useContext(WeatherContext)
+  const { favList, setFavList } = useContext(WeatherContext)
+
+  const [coordinates, setCoordinates] = useState({ lat: null, lng: null })
+
+  const handlePlaceChanged = (lat, lng) => {
+    setCoordinates({ lat, lng })
+  }
 
   useEffect(() => {
     const getCurrentLocation = async () => {
@@ -80,7 +85,7 @@ function App () {
             })
         )
     }
-  }, [currentLatitude, currentLongitude])
+  }, [])
 
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favList))
@@ -92,10 +97,12 @@ function App () {
       ) : (
         <div className='h-screen bg-primary text-primaryText text-center flex flex-col justify-center items-center w-full'>
           <div className='flex item-center gap-1 mb-6'>
-            <input
-              className='border rounded-lg w-96 px-3 py-1 outline-none'
-              placeholder='Search for any city'
-            />
+            <SearchInput onPlaceChanged={handlePlaceChanged} />
+            {coordinates.lat && (
+              <p>
+                Latitude: {coordinates.lat}, Longitude: {coordinates.lng}
+              </p>
+            )}
             <IconContext.Provider
               value={{ className: 'text-3xl text-gray-400 cursor-pointer' }}
             >

@@ -5,6 +5,9 @@ import LoadingScreen from './components/LoadingScreen'
 import DailyForecast from './components/DailyForecast'
 import CurrentWeather from './components/CurrentWeather'
 
+const savedFavorites = localStorage.getItem('favorites')
+  ? JSON.parse(localStorage.getItem('favorites'))
+  : []
 function App () {
   const [isLoading, setIsLoading] = useState(false)
   const [currentLatitude, setCurrentLatitude] = useState('44.43225') //Bucharest lat
@@ -13,7 +16,7 @@ function App () {
   const [weeklyWeatherData, setWeeklyWeatherData] = useState(null)
   const [hourlyForecastData, setHourlyForecastData] = useState(null)
   const [selectedOption, setSelectedOption] = useState('hourly')
-  const [favList, setFavList] = useState([])
+  const [favList, setFavList] = useState(savedFavorites)
 
   useEffect(() => {
     const getCurrentLocation = async () => {
@@ -74,9 +77,11 @@ function App () {
     }
   }, [currentLatitude, currentLongitude])
 
+  useEffect(() => {
+    localStorage.setItem('favorites', JSON.stringify(favList))
+  }, [favList])
   return (
     <>
-      {/* <WeatherStatusCode/> */}
       {isLoading ? (
         <LoadingScreen />
       ) : (
@@ -90,6 +95,10 @@ function App () {
           <div className='w-96 h-4/6 rounded-2xl'>
             {currentWeatherData && (
               <CurrentWeather
+                favList={favList}
+                setFavList={setFavList}
+                lat={currentWeatherData[0].lat}
+                lon={currentWeatherData[0].lon}
                 cityName={currentWeatherData[0].city_name}
                 temperature={currentWeatherData[0].temp}
                 statusCode={currentWeatherData[0].weather.code}

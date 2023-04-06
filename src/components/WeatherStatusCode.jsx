@@ -7,6 +7,7 @@ import snow601 from '../assets/weatherIcons/snow.svg'
 import heavySnow602 from '../assets/weatherIcons/heavySnow.svg'
 import mixSnowAndRain610 from '../assets/weatherIcons/mixSnowAndRain.svg'
 import flurries623 from '../assets/weatherIcons/flurries.svg'
+import overcastClouds804 from '../assets/weatherIcons/overcastClouds.svg'
 export default function WeatherStatusCode ({ statusCode, className }) {
   let iconImage
   switch (statusCode) {
@@ -37,6 +38,8 @@ export default function WeatherStatusCode ({ statusCode, className }) {
     case 623:
       iconImage = flurries623
       break
+    case 804:
+      iconImage = overcastClouds804
     default:
       break
   }

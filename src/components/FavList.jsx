@@ -8,7 +8,7 @@ export default function FavList () {
         <h2>My favorites</h2>
       </div>
       <div className='flex justify-center items-center w-full h-96'>
-        <div className='flex justify-center w-2/6 h-5/6 rounded-lg border'>
+        <div className='flex justify-center w-5/6 md:w-3/6 h-5/6 rounded-lg border'>
           {favList.length > 0 ? (
             <div className='flex flex-col gap-4'>
               {favList.map((favorite, index) => (

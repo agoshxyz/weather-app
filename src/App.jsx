@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import { IconContext } from 'react-icons'
 import { MdBookmarkBorder } from 'react-icons/md'
@@ -6,6 +6,7 @@ import HourlyForecast from './components/HourlyForecast'
 import LoadingScreen from './components/LoadingScreen'
 import DailyForecast from './components/DailyForecast'
 import CurrentWeather from './components/CurrentWeather'
+import { WeatherContext } from './contexts/WeatherContext'
 import Modal from './components/Modal'
 import FavList from './components/FavList'
 const savedFavorites = localStorage.getItem('favorites')
@@ -20,7 +21,7 @@ function App () {
   const [weeklyWeatherData, setWeeklyWeatherData] = useState(null)
   const [hourlyForecastData, setHourlyForecastData] = useState(null)
   const [selectedOption, setSelectedOption] = useState('hourly')
-  const [favList, setFavList] = useState(savedFavorites)
+  const {favList, setFavList} = useContext(WeatherContext)
 
   useEffect(() => {
     const getCurrentLocation = async () => {

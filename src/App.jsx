@@ -13,6 +13,7 @@ import SearchInput from './components/SearchInput'
 
 function App () {
   const [isLoading, setIsLoading] = useState(false)
+  const [hasLocationPermission, setHasLocationPermission] = useState(false)
   const [isFavShown, setIsFavShown] = useState(false)
   const [currentLatitude, setCurrentLatitude] = useState('44.43225') //Bucharest lat
   const [currentLongitude, setCurrentLongitude] = useState('26.10626') //Bucharest lon
@@ -22,11 +23,52 @@ function App () {
   const [selectedOption, setSelectedOption] = useState('hourly')
   const { favList, setFavList } = useContext(WeatherContext)
 
-  const [coordinates, setCoordinates] = useState({ lat: null, lng: null })
-
   const handlePlaceChanged = (lat, lng) => {
-    setCoordinates({ lat, lng })
+    setCurrentLatitude(lat)
+    setCurrentLongitude(lng)
   }
+  useEffect(() => {
+    axios
+      .get('https://api.weatherbit.io/v2.0/current/', {
+        params: {
+          lat: currentLatitude,
+          lon: currentLongitude,
+          key: import.meta.env.VITE_WEATHERBIT_API_KEY
+        }
+      })
+      .then(response => {
+        setCurrentWeatherData(response.data.data)
+        console.log(response.data.data)
+      })
+      .then(
+        axios
+          .get('https://api.weatherbit.io/v2.0/forecast/hourly/', {
+            params: {
+              lat: currentLatitude,
+              lon: currentLongitude,
+              key: import.meta.env.VITE_WEATHERBIT_API_KEY,
+              hours: 24
+            }
+          })
+          .then(response => {
+            console.log(response.data.data)
+            setHourlyForecastData(response.data.data)
+          })
+      )
+      .then(
+        axios
+          .get('https://api.weatherbit.io/v2.0/forecast/daily/', {
+            params: {
+              lat: currentLatitude,
+              lon: currentLongitude,
+              key: import.meta.env.VITE_WEATHERBIT_API_KEY
+            }
+          })
+          .then(response => {
+            setWeeklyWeatherData(response.data.data.slice(1, 8))
+          })
+      )
+  }, [currentLatitude, currentLongitude])
 
   useEffect(() => {
     const getCurrentLocation = async () => {
@@ -34,16 +76,18 @@ function App () {
       try {
         const position = await new Promise((resolve, reject) => {
           navigator.geolocation.getCurrentPosition(resolve, reject)
+          setHasLocationPermission(true)
         })
         setCurrentLatitude(position.coords.latitude)
         setCurrentLongitude(position.coords.longitude)
       } catch (error) {
-        console.log(error)
+        setHasLocationPermission(false)
+        console.error(error)
       }
       setIsLoading(false)
     }
     getCurrentLocation()
-    if (currentLatitude && currentLongitude) {
+    if (hasLocationPermission) {
       axios
         .get('https://api.weatherbit.io/v2.0/current/', {
           params: {
@@ -98,11 +142,6 @@ function App () {
         <div className='h-screen bg-primary text-primaryText text-center flex flex-col justify-center items-center w-full'>
           <div className='flex item-center gap-1 mb-6'>
             <SearchInput onPlaceChanged={handlePlaceChanged} />
-            {coordinates.lat && (
-              <p>
-                Latitude: {coordinates.lat}, Longitude: {coordinates.lng}
-              </p>
-            )}
             <IconContext.Provider
               value={{ className: 'text-3xl text-gray-400 cursor-pointer' }}
             >

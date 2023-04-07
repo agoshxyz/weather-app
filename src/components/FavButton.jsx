@@ -1,14 +1,16 @@
 import { IconContext } from 'react-icons'
-import { MdOutlineFavorite, MdOutlineFavoriteBorder } from 'react-icons/md'
+import { IoIosStarOutline, IoIosStar } from 'react-icons/io'
 export default function FavButton ({ lat, lon, isFavorite, onToggleFavorite }) {
   function handleClick () {
     onToggleFavorite(lat, lon)
   }
   return (
     <>
-      <IconContext.Provider value={{ className: 'text-gray-800 text-4xl mt-3' }}>
+      <IconContext.Provider
+        value={{ className: 'text-gray-800 text-4xl mt-3' }}
+      >
         <button onClick={handleClick}>
-          {isFavorite ? <MdOutlineFavorite /> : <MdOutlineFavoriteBorder />}
+          {isFavorite ? <IoIosStar /> : <IoIosStarOutline />}
         </button>
       </IconContext.Provider>
     </>

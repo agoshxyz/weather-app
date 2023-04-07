@@ -1,23 +1,24 @@
 import moment from 'moment'
-import WeatherStatusCode from './WeatherStatusCode'
+import WeatherStatusCodeDay from './WeatherStatusCodeDay'
 export default function HourlyForecast ({
   localTimeStamp,
   temperature,
   statusCode,
-  weatherDescription
+  weatherDescription,
+  className
 }) {
   const hour = moment(localTimeStamp).format('HH')
   return (
     <>
-    <div className='mb-2'>
-    {hour}
-    </div>
-      <WeatherStatusCode statusCode={statusCode}/>
-      {weatherDescription}
-      <p className='text-gray-800 font-bold text-lg mt-2'>
-        {Math.round(temperature)}
-        <span className='text-xl'>°C</span>
-      </p>
+      <div className={className}>
+        <div className='mb-4 font-bold text-xl'>{hour}</div>
+        <WeatherStatusCodeDay statusCode={statusCode} className='mb-2' />
+        <div className='w-24'> {weatherDescription} </div>
+        <p className='text-gray-800 font-bold text-3xl mt-2'>
+          {Math.round(temperature)}
+          <span className='text-xl'>°C</span>
+        </p>
+      </div>
     </>
   )
 }

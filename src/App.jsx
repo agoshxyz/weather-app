@@ -1,7 +1,9 @@
 import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import { IconContext } from 'react-icons'
+import { TbClockHour4 } from 'react-icons/tb'
 import { MdBookmarkBorder } from 'react-icons/md'
+import {BsCalendarDay} from 'react-icons/bs'
 import HourlyForecast from './components/HourlyForecast'
 import LoadingScreen from './components/LoadingScreen'
 import DailyForecast from './components/DailyForecast'
@@ -166,29 +168,38 @@ function App () {
                 statusCode={currentWeatherData[0].weather.code}
                 description={currentWeatherData[0].weather.description}
                 temperatureFeelsLike={currentWeatherData[0].app_temp}
+                sunrise={currentWeatherData[0].sunrise}
+                sunset={currentWeatherData[0].sunset}
               />
             )}
           </div>
-          <div className='flex items-center justify-center mb-2 mt-2'>
+          <div className='flex items-center justify-center mb-2 mt-2 w-52 text-center'>
             <button
-              className={`rounded-l-lg py-2 px-4 ${
+              className={`flex flex-row items-center justify-center text-center rounded-l-lg py-1 px-4 w-1/2  ${
                 selectedOption === 'hourly'
                   ? 'bg-gray-700 text-white font-bold'
                   : 'bg-gray-300 text-gray-700 font-medium'
               }`}
               onClick={() => setSelectedOption('hourly')}
             >
-              Hourly
+              <span className='mr-0.5'>Hourly</span>
+              <IconContext.Provider value={{ className: 'mt-0.5 text-3xl' }}>
+                <TbClockHour4 />
+              </IconContext.Provider>
             </button>
+
             <button
-              className={`rounded-r-lg py-2 px-4 ${
+              className={`flex flex-row items-center justify-center text-center rounded-r-lg py-2 px-2 w-1/2 ${
                 selectedOption === 'daily'
                   ? 'bg-gray-700 text-white font-bold'
                   : 'bg-gray-300 text-gray-700 font-medium'
               }`}
               onClick={() => setSelectedOption('daily')}
             >
-              Daily
+                 <span className='mr-1'>Daily</span>
+              <IconContext.Provider value={{ className: 'text-xl' }}>
+              <BsCalendarDay/>
+              </IconContext.Provider>
             </button>
           </div>
           <div
@@ -201,7 +212,7 @@ function App () {
               hourlyForecastData.map((data, index) => {
                 return (
                   <div
-                    className='py-2 px-8 flex flex-col justify-between rounded-2xl border'
+                    className='py-2 px-8 flex flex-col justify-center rounded-2xl border w-5/6'
                     key={index}
                   >
                     <HourlyForecast
@@ -209,6 +220,7 @@ function App () {
                       statusCode={data.weather.code}
                       localTimeStamp={data.timestamp_local}
                       temperature={data.temp}
+                      className='h-44 overflow-hidden'
                     />
                   </div>
                 )
@@ -218,12 +230,13 @@ function App () {
               weeklyWeatherData.map((data, index) => {
                 return (
                   <div
-                    className='p-2 flex flex-col rounded-2xl border'
+                    className='p-2 flex flex-col justify-center rounded-2xl border'
                     key={index}
                   >
                     <DailyForecast
                       date={data.valid_date}
                       temperature={data.temp}
+                      className='h-44 w-24 overflow-hidden'
                     />
                   </div>
                 )

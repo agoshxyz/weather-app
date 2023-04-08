@@ -16,27 +16,19 @@ export default function CurrentWeather ({
   sunset
 }) {
   const [currentTime, setCurrentTime] = useState(moment())
-  function handleToggleFavorite (lat, lon) {
-    const isFavorite = favList.some(
-      favorite => favorite.lat === lat && favorite.lon === lon
-    )
+  function handleToggleFavorite (lat, lon, cityName) {
+    const isFavorite = favList.some(favorite => favorite.cityName === cityName)
     if (isFavorite) {
-      setFavList(
-        favList.filter(
-          favorite => !(favorite.lat === lat && favorite.lon === lon)
-        )
-      )
+      setFavList(favList.filter(favorite => !(favorite.cityName === cityName)))
     } else {
       setFavList([...favList, { lat, lon, cityName }])
     }
   }
 
-  function isFavorite (lat, lon) {
-    return favList.some(
-      favorite => favorite.lat === lat && favorite.lon === lon
-    )
+  function isFavorite (cityName) {
+    return favList.some(favorite => favorite.cityName === cityName)
   }
-  const favorite = isFavorite(lat, lon)
+  const favorite = isFavorite(cityName)
   return (
     <div className='flex flex-col items-center justify-center'>
       <div className='flex items-center justify-center gap-1 align-middle'>
@@ -44,6 +36,7 @@ export default function CurrentWeather ({
         <FavButton
           lat={lat}
           lon={lon}
+          cityName={cityName}
           isFavorite={favorite}
           onToggleFavorite={handleToggleFavorite}
         />

@@ -170,8 +170,7 @@ function App () {
                 statusCode={currentWeatherData[0].weather.code}
                 description={currentWeatherData[0].weather.description}
                 temperatureFeelsLike={currentWeatherData[0].app_temp}
-                sunrise={currentWeatherData[0].sunrise}
-                sunset={currentWeatherData[0].sunset}
+                partOfTheDay={currentWeatherData[0].pod}
               />
             )}
           </div>
@@ -224,6 +223,7 @@ function App () {
                       statusCode={data.weather.code}
                       localTimeStamp={data.timestamp_local}
                       temperature={data.temp}
+                      partOfTheDay = {data.pod}
                       className='h-44 overflow-hidden'
                     />
                   </div>

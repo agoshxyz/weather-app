@@ -1,4 +1,7 @@
-import usePlacesAutocomplete, {getGeocode, getLatLng} from 'use-places-autocomplete'
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng
+} from 'use-places-autocomplete'
 
 export default function SearchInput ({ onPlaceChanged }) {
   const {
@@ -25,7 +28,7 @@ export default function SearchInput ({ onPlaceChanged }) {
       const { lat, lng } = await getLatLng(results[0])
       onPlaceChanged(lat, lng)
     } catch (error) {
-      console.log('Error: ', error)
+      console.error('Error: ', error)
     }
   }
   const renderSuggestions = () => {
@@ -61,7 +64,7 @@ export default function SearchInput ({ onPlaceChanged }) {
         onChange={handleInput}
         disabled={!ready}
         placeholder='Search for any city'
-        title="Search for any address"
+        title='Search for any address'
         className='border w-96 py-1 pl-4 pr-10 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-gray-300'
       />
       <ul className=''>{status === 'OK' && renderSuggestions()}</ul>

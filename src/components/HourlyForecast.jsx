@@ -9,7 +9,6 @@ export default function HourlyForecast ({
   partOfTheDay,
   className
 }) {
-  console.log(partOfTheDay)
   const hour = moment(localTimeStamp).format('HH')
   return (
     <>

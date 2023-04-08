@@ -7,12 +7,12 @@ export default function Modal ({ isOpen, onClose, children }) {
   if (!isOpen) return null
   return (
     <div
-      className='z-10 fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center '
+      className='z-10 fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center'
       id='wrapper'
       onClick={handleClose}
     >
-      <div className={`w-full max-w-4xl m-10 lg:m-3 overflow-y-auto`}>
-        <div className='bg-white rounded-lg flex flex-col overflow-hidden relative'>
+      <div className={`w-full max-w-lg m-10 lg:m-3 overflow-y-auto`}>
+        <div className='bg-primary rounded-lg flex flex-col overflow-hidden relative'>
           <div
             className='absolute top-0 right-0 p-2'
             onClick={() => {

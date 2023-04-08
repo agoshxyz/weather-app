@@ -29,11 +29,16 @@ export default function CurrentWeather ({
     return favList.some(favorite => favorite.cityName === cityName)
   }
   const favorite = isFavorite(cityName)
-  console.log(partOfTheDay)
   return (
-    <div className='flex flex-col items-center justify-center'>
-      <div className='flex items-center justify-center gap-1 align-middle'>
-        <p className='text-gray-800 font-bold text-6xl'>{cityName}</p>
+    <div className='flex flex-col items-center justify-center mb-4'>
+      <div className='flex items-center justify-center gap-1 align-middle mb-2'>
+        <p
+          className={`text-gray-800 font-bold text-6xl ${
+            cityName.length > 7 && 'text-5xl'
+          } ${cityName.length > 13 && 'text-4xl'}`}
+        >
+          {cityName}
+        </p>
         <FavButton
           lat={lat}
           lon={lon}
@@ -43,21 +48,19 @@ export default function CurrentWeather ({
         />
       </div>
 
-{
-  partOfTheDay === 'd' ? (
-    <WeatherStatusCodeDay
-    className='w-36 inline'
-    title={description}
-    statusCode={statusCode}
-  />
-  ) : (
-    <WeatherStatusCodeNight
-    className='w-36 inline'
-    title={description}
-    statusCode={statusCode}
-  />
-  )
-}
+      {partOfTheDay === 'd' ? (
+        <WeatherStatusCodeDay
+          className='w-36 inline'
+          title={description}
+          statusCode={statusCode}
+        />
+      ) : (
+        <WeatherStatusCodeNight
+          className='w-36 inline'
+          title={description}
+          statusCode={statusCode}
+        />
+      )}
 
       <p className='text-gray-800 font-bold text-7xl' title='Temperature in °C'>
         {Math.round(temperature)}

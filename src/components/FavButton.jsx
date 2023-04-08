@@ -7,7 +7,7 @@ export default function FavButton ({ lat, lon, cityName, isFavorite, onToggleFav
   return (
     <>
       <IconContext.Provider
-        value={{ className: 'text-gray-800 text-4xl mt-3' }}
+        value={{ className: 'text-gray-800 text-4xl mt-2' }}
       >
         <button
           onClick={handleClick}

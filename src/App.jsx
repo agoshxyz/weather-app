@@ -41,7 +41,6 @@ function App () {
       })
       .then(response => {
         setCurrentWeatherData(response.data.data)
-        console.log(response.data.data)
       })
       .then(
         axios
@@ -54,7 +53,6 @@ function App () {
             }
           })
           .then(response => {
-            console.log(response.data.data)
             setHourlyForecastData(response.data.data)
           })
       )
@@ -101,7 +99,6 @@ function App () {
         })
         .then(response => {
           setCurrentWeatherData(response.data.data)
-          console.log(response.data.data)
         })
         .then(
           axios
@@ -114,7 +111,6 @@ function App () {
               }
             })
             .then(response => {
-              console.log(response.data.data)
               setHourlyForecastData(response.data.data)
             })
         )
@@ -223,7 +219,7 @@ function App () {
                       statusCode={data.weather.code}
                       localTimeStamp={data.timestamp_local}
                       temperature={data.temp}
-                      partOfTheDay = {data.pod}
+                      partOfTheDay={data.pod}
                       className='h-44 overflow-hidden'
                     />
                   </div>

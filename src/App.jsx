@@ -138,7 +138,7 @@ function App () {
       {isLoading ? (
         <LoadingScreen />
       ) : (
-        <div className='h-screen bg-primary text-primaryText text-center flex flex-col justify-center items-center w-full'>
+        <div className='h-screen bg-primary text-primaryText text-center flex flex-col justify-center items-center w-full px-10'>
           <div className='flex item-center gap-1 mb-6'>
             <SearchInput onPlaceChanged={handlePlaceChanged} />
             <IconContext.Provider

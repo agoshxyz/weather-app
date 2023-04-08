@@ -14,7 +14,7 @@ export default function FavList () {
         <div className='flex justify-center overflow-auto h-56 '>
           <div className='flex justify-center rounded-lg '>
             {favList.length > 0 ? (
-              <div className='flex flex-col gap-4 bg-red-200 w-80'>
+              <div className='flex flex-col gap-4 w-80'>
                 {favList.map((favorite, index) => (
                   <>
                     <div className='flex justify-between'>

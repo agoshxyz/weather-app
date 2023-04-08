@@ -6,27 +6,27 @@ import thunderStormWithDrizzle231 from '../assets/weatherIcons/day/thunderstormW
 import thunderStormWithHeavyDrizzle232 from '../assets/weatherIcons/day/thunderstormWithHeavyDrizzle.svg'
 import thunderStormWithHail233 from '../assets/weatherIcons/day/thunderstormWithHail.svg'
 
-import lightDrizzle300 from '../assets/weatherIcons/day/lightDrizzle.svg'
-import drizzle301 from '../assets/weatherIcons/day/drizzle.svg'
-import heavyDrizzle302 from '../assets/weatherIcons/day/heavyDrizzle.svg'
+import lightDrizzle300 from '../assets/weatherIcons/general/lightDrizzle.svg'
+import drizzle301 from '../assets/weatherIcons/general/drizzle.svg'
+import heavyDrizzle302 from '../assets/weatherIcons/general/heavyDrizzle.svg'
 
-import lightRain500 from '../assets/weatherIcons/day/lightRain.svg'
-import moderateRain501 from '../assets/weatherIcons/day/moderateRain.svg'
-import heavyRain502 from '../assets/weatherIcons/day/heavyRain.svg'
-import freezingRain511 from '../assets/weatherIcons/day/freezingRain.svg'
-import lightShowerRain520 from '../assets/weatherIcons/day/lightShowerRain.svg'
-import showerRain521 from '../assets/weatherIcons/day/showerRain.svg'
-import heavyShowerRain522 from '../assets/weatherIcons/day/heavyShowerRain.svg'
+import lightRain500 from '../assets/weatherIcons/general/lightRain.svg'
+import moderateRain501 from '../assets/weatherIcons/general/moderateRain.svg'
+import heavyRain502 from '../assets/weatherIcons/general/heavyRain.svg'
+import freezingRain511 from '../assets/weatherIcons/general/freezingRain.svg'
+import lightShowerRain520 from '../assets/weatherIcons/general/lightShowerRain.svg'
+import showerRain521 from '../assets/weatherIcons/general/showerRain.svg'
+import heavyShowerRain522 from '../assets/weatherIcons/general/heavyShowerRain.svg'
 
 import lightSnow600 from '../assets/weatherIcons/day/lightSnow.svg'
-import snow601 from '../assets/weatherIcons/day/snow.svg'
-import heavySnow602 from '../assets/weatherIcons/day/heavySnow.svg'
+import snow601 from '../assets/weatherIcons/general/snow.svg'
+import heavySnow602 from '../assets/weatherIcons/general/heavySnow.svg'
 import mixSnowAndRain610 from '../assets/weatherIcons/day/mixSnowAndRain.svg'
-import sleet611 from '../assets/weatherIcons/day/sleet.svg'
-import heavySleet612 from '../assets/weatherIcons/day/heavySleet.svg'
+import sleet611 from '../assets/weatherIcons/general/sleet.svg'
+import heavySleet612 from '../assets/weatherIcons/general/heavySleet.svg'
 import snowShower621 from '../assets/weatherIcons/day/snowShower.svg'
-import heavySnowShower622 from '../assets/weatherIcons/day/heavySnowShower.svg'
-import flurries623 from '../assets/weatherIcons/day/flurries.svg'
+import heavySnowShower622 from '../assets/weatherIcons/general/heavySnowShower.svg'
+import flurries623 from '../assets/weatherIcons/general/flurries.svg'
 
 import mist700 from '../assets/weatherIcons/day/mist.svg'
 import smoke711 from '../assets/weatherIcons/day/smoke.svg'
@@ -39,10 +39,10 @@ import clearSky800 from '../assets/weatherIcons/day/clearSky.svg'
 import fewClouds801 from '../assets/weatherIcons/day/fewClouds.svg'
 import scatteredClouds802 from '../assets/weatherIcons/day/scatteredClouds.svg'
 import brokenClouds803 from '../assets/weatherIcons/day/brokenClouds.svg'
-import overcastClouds804 from '../assets/weatherIcons/day/overcastClouds.svg'
+import overcastClouds804 from '../assets/weatherIcons/general/overcastClouds.svg'
 
-import unknownPrecipitation900 from '../assets/weatherIcons/day/unknownPrecipitation.svg'
-export default function WeatherStatusCodeDay ({ statusCode, className }) {
+import unknownPrecipitation900 from '../assets/weatherIcons/general/unknownPrecipitation.svg'
+export default function WeatherStatusCodeDay ({ statusCode, className, title }) {
   let iconImage
   switch (statusCode) {
     case 200:
@@ -166,7 +166,7 @@ export default function WeatherStatusCodeDay ({ statusCode, className }) {
 
   return (
     <>
-      <img src={iconImage} className={className} alt='weatherIcon' />
+      <img src={iconImage} className={"inline "+ className} alt='weatherIcon' title={title} />
     </>
   )
 }

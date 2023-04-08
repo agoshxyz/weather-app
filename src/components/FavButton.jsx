@@ -9,7 +9,10 @@ export default function FavButton ({ lat, lon, isFavorite, onToggleFavorite }) {
       <IconContext.Provider
         value={{ className: 'text-gray-800 text-4xl mt-3' }}
       >
-        <button onClick={handleClick}>
+        <button
+          onClick={handleClick}
+          title={`${isFavorite ? 'Remove from favorites' : 'Add to favorites'}`}
+        >
           {isFavorite ? <IoIosStar /> : <IoIosStarOutline />}
         </button>
       </IconContext.Provider>

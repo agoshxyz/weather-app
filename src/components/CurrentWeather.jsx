@@ -50,13 +50,12 @@ export default function CurrentWeather ({
       </div>
 
       <WeatherStatusCodeDay
-        className='w-36 mt-3 mb-2'
+        className='w-36 inline'
+        title={description}
         statusCode={statusCode}
-        sunrise={sunrise}
-        sunset={sunset}
       />
 
-      <p className='text-gray-800 font-bold text-7xl'>
+      <p className='text-gray-800 font-bold text-7xl' title='Temperature in °C'>
         {Math.round(temperature)}
         <span className='text-6xl'>°C</span>
       </p>

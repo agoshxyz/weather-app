@@ -2,8 +2,8 @@ import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import { IconContext } from 'react-icons'
 import { TbClockHour4 } from 'react-icons/tb'
-import { MdBookmarkBorder } from 'react-icons/md'
-import {BsCalendarDay} from 'react-icons/bs'
+import { MdBookmarkBorder, MdBookmark } from 'react-icons/md'
+import { BsCalendarDay } from 'react-icons/bs'
 import HourlyForecast from './components/HourlyForecast'
 import LoadingScreen from './components/LoadingScreen'
 import DailyForecast from './components/DailyForecast'
@@ -14,6 +14,7 @@ import FavList from './components/FavList'
 import SearchInput from './components/SearchInput'
 
 function App () {
+  axios.defaults.baseURL = 'https://api.weatherbit.io/v2.0'
   const [isLoading, setIsLoading] = useState(false)
   const [hasLocationPermission, setHasLocationPermission] = useState(false)
   const [isFavShown, setIsFavShown] = useState(false)
@@ -31,7 +32,7 @@ function App () {
   }
   useEffect(() => {
     axios
-      .get('https://api.weatherbit.io/v2.0/current/', {
+      .get('/current/', {
         params: {
           lat: currentLatitude,
           lon: currentLongitude,
@@ -44,7 +45,7 @@ function App () {
       })
       .then(
         axios
-          .get('https://api.weatherbit.io/v2.0/forecast/hourly/', {
+          .get('/forecast/hourly', {
             params: {
               lat: currentLatitude,
               lon: currentLongitude,
@@ -59,7 +60,7 @@ function App () {
       )
       .then(
         axios
-          .get('https://api.weatherbit.io/v2.0/forecast/daily/', {
+          .get('/forecast/daily', {
             params: {
               lat: currentLatitude,
               lon: currentLongitude,
@@ -91,7 +92,7 @@ function App () {
     getCurrentLocation()
     if (hasLocationPermission) {
       axios
-        .get('https://api.weatherbit.io/v2.0/current/', {
+        .get('/current', {
           params: {
             lat: currentLatitude,
             lon: currentLongitude,
@@ -104,7 +105,7 @@ function App () {
         })
         .then(
           axios
-            .get('https://api.weatherbit.io/v2.0/forecast/hourly/', {
+            .get('/forecast/hourly', {
               params: {
                 lat: currentLatitude,
                 lon: currentLongitude,
@@ -119,7 +120,7 @@ function App () {
         )
         .then(
           axios
-            .get('https://api.weatherbit.io/v2.0/forecast/daily/', {
+            .get('/forecast/daily', {
               params: {
                 lat: currentLatitude,
                 lon: currentLongitude,
@@ -148,11 +149,12 @@ function App () {
               value={{ className: 'text-3xl text-gray-400 cursor-pointer' }}
             >
               <button
+                title='My favorites'
                 onClick={() => {
                   setIsFavShown(true)
                 }}
               >
-                <MdBookmarkBorder />
+                {favList.length === 0 ? <MdBookmarkBorder /> : <MdBookmark />}
               </button>
             </IconContext.Provider>
           </div>
@@ -173,13 +175,14 @@ function App () {
               />
             )}
           </div>
-          <div className='flex items-center justify-center mb-2 mt-2 w-52 text-center'>
+          <div className='flex items-center justify-center mb-2 mt-2 w-52 text-center '>
             <button
-              className={`flex flex-row items-center justify-center text-center rounded-l-lg py-1 px-4 w-1/2  ${
+              className={`flex flex-row items-center justify-center text-center rounded-l-lg py-1 px-4 w-1/2 transition ${
                 selectedOption === 'hourly'
                   ? 'bg-gray-700 text-white font-bold'
                   : 'bg-gray-300 text-gray-700 font-medium'
               }`}
+              title='Show hourly forecast'
               onClick={() => setSelectedOption('hourly')}
             >
               <span className='mr-0.5'>Hourly</span>
@@ -189,16 +192,17 @@ function App () {
             </button>
 
             <button
-              className={`flex flex-row items-center justify-center text-center rounded-r-lg py-2 px-2 w-1/2 ${
+              className={`flex flex-row items-center justify-center text-center rounded-r-lg py-2 px-2 w-1/2 transition ${
                 selectedOption === 'daily'
                   ? 'bg-gray-700 text-white font-bold'
                   : 'bg-gray-300 text-gray-700 font-medium'
               }`}
+              title='Show daily forecast'
               onClick={() => setSelectedOption('daily')}
             >
-                 <span className='mr-1'>Daily</span>
+              <span className='mr-1'>Daily</span>
               <IconContext.Provider value={{ className: 'text-xl' }}>
-              <BsCalendarDay/>
+                <BsCalendarDay />
               </IconContext.Provider>
             </button>
           </div>

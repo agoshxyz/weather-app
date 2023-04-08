@@ -61,6 +61,7 @@ export default function SearchInput ({ onPlaceChanged }) {
         onChange={handleInput}
         disabled={!ready}
         placeholder='Search for any city'
+        title="Search for any address"
         className='border w-96 py-1 pl-4 pr-10 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-gray-300'
       />
       <ul className=''>{status === 'OK' && renderSuggestions()}</ul>

@@ -1,7 +1,22 @@
 # Weather App for Technical Evaluation
+Live URL
+ [https://cumevremea.xyz](http://cumevremea.xyz)
+ 
+## Features
+- Current city weather
+- Search for address (airport, city etc.)
+- Hourly forecast
+- Daily forecast
+- Add/remove favorite cities
+- See current weather of favorite cities
 
-## Getting Started
+## Design
+Credits for weather icons [Alexey Onufriev](https://dribbble.com/shots/3761552-Free-Weather-Icons)
 
+Modified weather icons made by me for this project [Figma Link](https://www.figma.com/file/B3UcwKfNRNfZSnnnOShERv/Weather-Icons?node-id=0%3A1&t=ymOtNhS5JfkNHl8w-1)
+
+
+## Run Locally
 ### Prerequisites
 
 - Node.js
@@ -26,6 +41,10 @@ To build the app for production, run:
    yarn build
 ```
 This will create a production-ready build of the app in the dist directory.
+### Environment Variables
+To run this project, you will need to add the following environment variables to your .env file:
 
-### Usage
-Coming soon.
+VITE_WEATHERBIT_API_KEY - Get your own Weatherbit API key from https://www.weatherbit.io
+
+VITE_MAPS_API_KEY - Get your own Google Maps API key from https://developers.google.com/maps
+

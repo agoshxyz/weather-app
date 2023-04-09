@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import moment from 'moment'
 import WeatherStatusCodeDay from './WeatherStatusCodeDay'
 import WeatherStatusCodeNight from './WeatherStatusCodeNight'
 import FavButton from './FavButton'
@@ -15,7 +13,6 @@ export default function CurrentWeather ({
   temperatureFeelsLike,
   partOfTheDay
 }) {
-  const [currentTime, setCurrentTime] = useState(moment())
   function handleToggleFavorite (lat, lon, cityName) {
     const isFavorite = favList.some(favorite => favorite.cityName === cityName)
     if (isFavorite) {
@@ -24,14 +21,13 @@ export default function CurrentWeather ({
       setFavList([...favList, { lat, lon, cityName }])
     }
   }
-
   function isFavorite (cityName) {
     return favList.some(favorite => favorite.cityName === cityName)
   }
   const favorite = isFavorite(cityName)
   return (
     <div className='flex flex-col items-center justify-center mb-4'>
-      <div className='flex items-center justify-center gap-1 align-middle mb-2'>
+      <div className='flex items-center justify-center gap-1 align-middle mb-5'>
         <p
           className={`text-gray-800 font-bold ${
             cityName.length < 8 && 'text-6xl'

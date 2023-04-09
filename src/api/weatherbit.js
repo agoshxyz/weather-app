@@ -16,7 +16,7 @@ export function getCurrentWeather (lat, lon) {
           lon
         }
       })
-      .then(response => resolve(response.data.data))
+      .then(response => resolve(response.data.data[0]))
       .catch(error => {
         reject(error)
       })
@@ -49,7 +49,7 @@ export function getWeeklyForecast (lat, lon) {
           lon
         }
       })
-      .then(response => resolve(response.data.data.slice(1,8)))
+      .then(response => resolve(response.data.data.slice(1, 8)))
       .catch(error => {
         reject(error)
       })

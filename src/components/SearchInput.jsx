@@ -34,7 +34,7 @@ export default function SearchInput ({ onPlaceChanged }) {
   const renderSuggestions = () => {
     if (data && data.length) {
       return (
-        <div className='absolute top-full mt-2 w-full bg-white rounded-md shadow-lg z-10'>
+        <div className='absolute top-full mt-2 bg-white rounded-md shadow-lg z-10'>
           {data.map(suggestion => {
             const {
               place_id,

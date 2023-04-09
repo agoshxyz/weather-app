@@ -1,7 +1,12 @@
 import { useState, useEffect, useContext } from 'react'
 import { IconContext } from 'react-icons'
 import { TbClockHour4 } from 'react-icons/tb'
-import { MdBookmarkBorder, MdBookmark } from 'react-icons/md'
+import { RiEmotionSadLine } from 'react-icons/ri'
+import {
+  MdOutlineErrorOutline,
+  MdBookmarkBorder,
+  MdBookmark
+} from 'react-icons/md'
 import { BsCalendarDay } from 'react-icons/bs'
 import { WeatherContext } from './contexts/WeatherContext'
 import LoadingScreen from './components/LoadingScreen'
@@ -18,6 +23,7 @@ import {
 } from './api/weatherbit'
 function App () {
   const [isLoading, setIsLoading] = useState(true)
+  const [isError, setIsError] = useState(false)
   const [hasLocationPermission, setHasLocationPermission] = useState(false)
   const [isFavShown, setIsFavShown] = useState(false)
   const [currentLatitude, setCurrentLatitude] = useState(null)
@@ -39,6 +45,8 @@ function App () {
       setWeeklyWeatherData(weeklyForecast)
       setIsLoading(false)
     } catch (error) {
+      setIsError(true)
+      setIsLoading(false)
       console.error(error)
     }
   }
@@ -60,7 +68,7 @@ function App () {
       if (!hasLocationPermission) {
         fetchWeatherData('44.436141', '26.10626') //Bucharest coordinates
       }
-      console.error(error)
+      console.error(error.message)
     }
   }
   async function runOnPageLoad () {
@@ -74,38 +82,56 @@ function App () {
   }, [favList])
   return (
     <>
-      {isLoading === true ? (
+      {isLoading ? (
         <LoadingScreen />
+      ) : isError ? (
+        <div className='flex flex-col w-screen h-screen items-center justify-center'>
+          <p className='flex gap-1 items-center text-5xl mb-3 text-gray-700'>
+            We apologize <RiEmotionSadLine />
+          </p>
+          <p className='text-2xl flex items-center text-gray-600'>
+            <span className='mr-0.5  mb-1'>
+              <a href='https://www.weatherbit.io/' className='text-blue-900'>
+                weatherbit.io
+              </a>{' '}
+              is not responding{' '}
+            </span>
+            <MdOutlineErrorOutline />
+          </p>
+          <p className='text-red-400'>Try again later please!</p>
+        </div>
       ) : (
-        <div className='h-screen bg-primary text-center flex flex-col justify-center items-center w-full'>
-          <div className='flex item-center gap-1 mb-6'>
-            <SearchInput onPlaceChanged={handlePlaceChanged} />
-            <IconContext.Provider
-              value={{ className: 'text-3xl text-gray-400 cursor-pointer' }}
-            >
-              <button
-                title='My favorites'
-                onClick={() => {
-                  setIsFavShown(true)
-                }}
+        <div className='h-screen bg-primary text-center flex flex-col justify-center items-center w-screen'>
+          <div className='mr-3 ml-3'>
+            <div className='flex item-center mb-6 justify-center w-full'>
+              <SearchInput onPlaceChanged={handlePlaceChanged} />
+              <IconContext.Provider
+                value={{ className: 'text-3xl text-gray-400 cursor-pointer' }}
               >
-                {favList.length === 0 ? <MdBookmarkBorder /> : <MdBookmark />}
-              </button>
-            </IconContext.Provider>
+                <button
+                  title='My favorites'
+                  onClick={() => {
+                    setIsFavShown(true)
+                  }}
+                >
+                  {favList.length === 0 ? <MdBookmarkBorder /> : <MdBookmark />}
+                </button>
+              </IconContext.Provider>
+            </div>
           </div>
           <div className='w-96 rounded-2xl'>
             {currentWeatherData && (
               <CurrentWeather
                 favList={favList}
                 setFavList={setFavList}
-                lat={currentWeatherData[0].lat}
-                lon={currentWeatherData[0].lon}
-                cityName={currentWeatherData[0].city_name}
-                temperature={currentWeatherData[0].temp}
-                statusCode={currentWeatherData[0].weather.code}
-                description={currentWeatherData[0].weather.description}
-                temperatureFeelsLike={currentWeatherData[0].app_temp}
-                partOfTheDay={currentWeatherData[0].pod}
+                lat={currentWeatherData.lat}
+                lon={currentWeatherData.lon}
+                cityName={currentWeatherData.city_name}
+                temperature={currentWeatherData.temp}
+                statusCode={currentWeatherData.weather.code}
+                description={currentWeatherData.weather.description}
+                temperatureFeelsLike={currentWeatherData.app_temp}
+                partOfTheDay={currentWeatherData.pod}
               />
             )}
           </div>
@@ -141,10 +167,10 @@ function App () {
           </div>
           <div
             className={`flex
-            ${selectedOption === 'hourly' && 'w-11/12'}
-            ${
-              selectedOption === 'daily' && 'lg:justify-center w-5/6 '
-            } gap-2 overflow-auto   rounded-lg mt-2`}
+          ${selectedOption === 'hourly' && 'w-11/12'}
+          ${
+            selectedOption === 'daily' && 'lg:justify-center w-5/6 '
+          } gap-2 overflow-auto   rounded-lg mt-2`}
           >
             {hourlyForecastData &&
               selectedOption === 'hourly' &&
@@ -174,11 +200,11 @@ function App () {
                     key={index}
                   >
                     <DailyForecast
-                      weatherDescription = {data.weather.description}
+                      weatherDescription={data.weather.description}
                       statusCode={data.weather.code}
                       date={data.valid_date}
-                      lowTemperature = {Math.round(data.low_temp)}
-                      highTemperature = {Math.round(data.high_temp)}
+                      lowTemperature={Math.round(data.low_temp)}
+                      highTemperature={Math.round(data.high_temp)}
                       className='h-44 w-36 overflow-hidden'
                     />
                   </div>

@@ -28,9 +28,9 @@ export default function HourlyForecast ({
             title={weatherDescription}
           />
         )}
-        <div className='w-24'> {weatherDescription} </div>
+        <div className='w-24 h-10 leading-5'> {weatherDescription} </div>
         <p className='text-gray-800 font-bold text-3xl mt-2'>
-          {Math.round(temperature)}
+          {temperature}
           <span className='text-xl'>°C</span>
         </p>
       </div>

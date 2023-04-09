@@ -33,9 +33,11 @@ export default function CurrentWeather ({
     <div className='flex flex-col items-center justify-center mb-4'>
       <div className='flex items-center justify-center gap-1 align-middle mb-2'>
         <p
-          className={`text-gray-800 font-bold text-6xl ${
-            cityName.length > 7 && 'text-5xl'
-          } ${cityName.length > 13 && 'text-4xl'}`}
+          className={`text-gray-800 font-bold ${
+            cityName.length < 8 && 'text-6xl'
+          } ${cityName.length > 7 && 'text-5xl'} ${
+            cityName.length > 13 && 'text-4xl'
+          }`}
         >
           {cityName}
         </p>

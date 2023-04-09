@@ -166,7 +166,12 @@ export default function WeatherStatusCodeDay ({ statusCode, className, title }) 
 
   return (
     <>
-      <img src={iconImage} className={"inline "+ className} alt='weatherIcon' title={title} />
+      <img
+        src={iconImage}
+        className={'inline ' + className}
+        alt='weatherIcon'
+        title={title}
+      />
     </>
   )
 }

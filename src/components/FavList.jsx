@@ -8,7 +8,7 @@ export default function FavList () {
   return (
     <>
       <div className='w-full h-96'>
-        <div className='text-center mt-20 text-4xl font-bold mb-6'>
+        <div className='text-center mt-12 text-4xl font-bold mb-6'>
           <h2>My favorite cities</h2>
         </div>
         <div className='flex justify-center overflow-auto h-56 '>
@@ -17,10 +17,9 @@ export default function FavList () {
               <div className='flex flex-col gap-4 w-80'>
                 {favList.map((favorite, index) => (
                   <>
-                    <div className='flex justify-between'>
+                    <div className='flex justify-between' key={index}>
                       <FavItem
                         favList={favList}
-                        key={index}
                         lat={favorite.lat}
                         lon={favorite.lon}
                         cityName={favorite.cityName}

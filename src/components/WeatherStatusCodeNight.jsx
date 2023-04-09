@@ -42,7 +42,11 @@ import brokenClouds803 from '../assets/weatherIcons/night/brokenClouds.svg'
 import overcastClouds804 from '../assets/weatherIcons/general/overcastClouds.svg'
 
 import unknownPrecipitation900 from '../assets/weatherIcons/general/unknownPrecipitation.svg'
-export default function WeatherStatusCodeNight ({ statusCode, className }) {
+export default function WeatherStatusCodeNight ({
+  statusCode,
+  className,
+  title
+}) {
   let iconImage
   switch (statusCode) {
     case 200:
@@ -166,7 +170,12 @@ export default function WeatherStatusCodeNight ({ statusCode, className }) {
 
   return (
     <>
-      <img src={iconImage} className={className} alt='weatherIcon' />
+      <img
+        src={iconImage}
+        className={'inline ' + className}
+        alt='weatherIcon'
+        title={title}
+      />
     </>
   )
 }

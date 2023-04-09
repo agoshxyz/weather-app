@@ -2,20 +2,19 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import WeatherStatusCodeDay from './WeatherStatusCodeDay'
 import WeatherStatusCodeNight from './WeatherStatusCodeNight'
+import { getCurrentWeather } from '../api/weatherbit'
 export default function FavItem ({ favList, lat, lon, cityName }) {
   const [favItemWeatherData, setFavItemWeatherData] = useState(null)
   useEffect(() => {
-    axios
-      .get('/current/', {
-        params: {
-          lat: lat,
-          lon: lon,
-          key: import.meta.env.VITE_WEATHERBIT_API_KEY
-        }
-      })
-      .then(response => {
-        setFavItemWeatherData(response.data.data)
-      })
+    const fetchData = async () => {
+      try {
+        const currentWeather = await getCurrentWeather(lat, lon)
+        setFavItemWeatherData(currentWeather)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
   }, [favList])
   return (
     <div className='flex justify-between items-center gap-9 mr-12'>

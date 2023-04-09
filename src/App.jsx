@@ -1,76 +1,64 @@
 import { useState, useEffect, useContext } from 'react'
-import axios from 'axios'
 import { IconContext } from 'react-icons'
 import { TbClockHour4 } from 'react-icons/tb'
 import { MdBookmarkBorder, MdBookmark } from 'react-icons/md'
 import { BsCalendarDay } from 'react-icons/bs'
-import HourlyForecast from './components/HourlyForecast'
-import LoadingScreen from './components/LoadingScreen'
-import DailyForecast from './components/DailyForecast'
-import CurrentWeather from './components/CurrentWeather'
 import { WeatherContext } from './contexts/WeatherContext'
+import LoadingScreen from './components/LoadingScreen'
+import CurrentWeather from './components/CurrentWeather'
+import HourlyForecast from './components/HourlyForecast'
+import DailyForecast from './components/DailyForecast'
 import Modal from './components/Modal'
 import FavList from './components/FavList'
 import SearchInput from './components/SearchInput'
+import {
+  getCurrentWeather,
+  getHourlyForecast,
+  getWeeklyForecast
+} from './api/weatherbit'
 
 function App () {
-  axios.defaults.baseURL = 'https://api.weatherbit.io/v2.0'
   const [isLoading, setIsLoading] = useState(false)
   const [hasLocationPermission, setHasLocationPermission] = useState(false)
   const [isFavShown, setIsFavShown] = useState(false)
-  const [currentLatitude, setCurrentLatitude] = useState('44.43225') //Bucharest lat
-  const [currentLongitude, setCurrentLongitude] = useState('26.10626') //Bucharest lon
+  const [currentLatitude, setCurrentLatitude] = useState(null)
+  const [currentLongitude, setCurrentLongitude] = useState(null)
   const [currentWeatherData, setCurrentWeatherData] = useState(null)
   const [weeklyWeatherData, setWeeklyWeatherData] = useState(null)
   const [hourlyForecastData, setHourlyForecastData] = useState(null)
   const [selectedOption, setSelectedOption] = useState('hourly')
   const { favList, setFavList } = useContext(WeatherContext)
-
   const handlePlaceChanged = (lat, lng) => {
     setCurrentLatitude(lat)
     setCurrentLongitude(lng)
   }
   useEffect(() => {
-    axios
-      .get('/current/', {
-        params: {
-          lat: currentLatitude,
-          lon: currentLongitude,
-          key: import.meta.env.VITE_WEATHERBIT_API_KEY
-        }
-      })
-      .then(response => {
-        setCurrentWeatherData(response.data.data)
-      })
-      .then(
-        axios
-          .get('/forecast/hourly', {
-            params: {
-              lat: currentLatitude,
-              lon: currentLongitude,
-              key: import.meta.env.VITE_WEATHERBIT_API_KEY,
-              hours: 24
-            }
-          })
-          .then(response => {
-            setHourlyForecastData(response.data.data)
-          })
-      )
-      .then(
-        axios
-          .get('/forecast/daily', {
-            params: {
-              lat: currentLatitude,
-              lon: currentLongitude,
-              key: import.meta.env.VITE_WEATHERBIT_API_KEY
-            }
-          })
-          .then(response => {
-            setWeeklyWeatherData(response.data.data.slice(1, 8))
-          })
-      )
+    const fetchData = async () => {
+      setIsLoading(true)
+      try {
+        const currentWeather = await getCurrentWeather(
+          currentLatitude,
+          currentLongitude
+        )
+        const hourlyForecast = await getHourlyForecast(
+          currentLatitude,
+          currentLongitude
+        )
+        const weeklyForecast = await getWeeklyForecast(
+          currentLatitude,
+          currentLongitude
+        )
+        setCurrentWeatherData(currentWeather)
+        setHourlyForecastData(hourlyForecast)
+        setWeeklyWeatherData(weeklyForecast)
+        setIsLoading(false)
+      } catch (error) {
+        console.error(error)
+        setIsLoading(false)
+      }
+    }
+    fetchData()
   }, [currentLatitude, currentLongitude])
-
   useEffect(() => {
     const getCurrentLocation = async () => {
       setIsLoading(true)
@@ -88,48 +76,11 @@ function App () {
       setIsLoading(false)
     }
     getCurrentLocation()
-    if (hasLocationPermission) {
-      axios
-        .get('/current', {
-          params: {
-            lat: currentLatitude,
-            lon: currentLongitude,
-            key: import.meta.env.VITE_WEATHERBIT_API_KEY
-          }
-        })
-        .then(response => {
-          setCurrentWeatherData(response.data.data)
-        })
-        .then(
-          axios
-            .get('/forecast/hourly', {
-              params: {
-                lat: currentLatitude,
-                lon: currentLongitude,
-                key: import.meta.env.VITE_WEATHERBIT_API_KEY,
-                hours: 24
-              }
-            })
-            .then(response => {
-              setHourlyForecastData(response.data.data)
-            })
-        )
-        .then(
-          axios
-            .get('/forecast/daily', {
-              params: {
-                lat: currentLatitude,
-                lon: currentLongitude,
-                key: import.meta.env.VITE_WEATHERBIT_API_KEY
-              }
-            })
-            .then(response => {
-              setWeeklyWeatherData(response.data.data.slice(1, 8))
-            })
-        )
+    if (!hasLocationPermission) {
+      setCurrentLatitude('44.436141') //Bucharest lat
+      setCurrentLongitude('26.10626') //Bucharest lon
     }
   }, [])
-
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favList))
   }, [favList])
@@ -185,7 +136,6 @@ function App () {
                 <TbClockHour4 />
               </IconContext.Provider>
             </button>
-
             <button
               className={`flex flex-row items-center justify-center text-center rounded-r-lg py-2 px-2 w-1/2 transition ${
                 selectedOption === 'daily'
@@ -203,7 +153,7 @@ function App () {
           </div>
           <div
             className={`flex ${
-              selectedOption === 'daily' && 'justify-center'
+              selectedOption === 'daily' && 'lg:justify-center'
             } gap-2 overflow-auto w-5/6 mt-2`}
           >
             {hourlyForecastData &&
@@ -218,7 +168,7 @@ function App () {
                       weatherDescription={data.weather.description}
                       statusCode={data.weather.code}
                       localTimeStamp={data.timestamp_local}
-                      temperature={data.temp}
+                      temperature={Math.round(data.temp)}
                       partOfTheDay={data.pod}
                       className='h-44 overflow-hidden'
                     />
@@ -255,5 +205,4 @@ function App () {
     </>
   )
 }
-
 export default App

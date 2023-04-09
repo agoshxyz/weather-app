@@ -16,9 +16,8 @@ import {
   getHourlyForecast,
   getWeeklyForecast
 } from './api/weatherbit'
-
 function App () {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [hasLocationPermission, setHasLocationPermission] = useState(false)
   const [isFavShown, setIsFavShown] = useState(false)
   const [currentLatitude, setCurrentLatitude] = useState(null)
@@ -28,68 +27,57 @@ function App () {
   const [hourlyForecastData, setHourlyForecastData] = useState(null)
   const [selectedOption, setSelectedOption] = useState('hourly')
   const { favList, setFavList } = useContext(WeatherContext)
+  const fetchWeatherData = async (lat, lon) => {
+    setCurrentLatitude(lat)
+    setCurrentLongitude(lon)
+    try {
+      const currentWeather = await getCurrentWeather(lat, lon)
+      const hourlyForecast = await getHourlyForecast(lat, lon)
+      const weeklyForecast = await getWeeklyForecast(lat, lon)
+      setCurrentWeatherData(currentWeather)
+      setHourlyForecastData(hourlyForecast)
+      setWeeklyWeatherData(weeklyForecast)
+      setIsLoading(false)
+    } catch (error) {
+      console.error(error)
+    }
+  }
   const handlePlaceChanged = (lat, lng) => {
     setCurrentLatitude(lat)
     setCurrentLongitude(lng)
+    fetchWeatherData(lat, lng)
+  }
+  const getCurrentLocation = async () => {
+    try {
+      const position = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject)
+        setHasLocationPermission(true)
+      })
+
+      fetchWeatherData(position.coords.latitude, position.coords.longitude)
+    } catch (error) {
+      setHasLocationPermission(false)
+      if (!hasLocationPermission) {
+        fetchWeatherData('44.436141', '26.10626') //Bucharest coordinates
+      }
+      console.error(error)
+    }
+  }
+  async function runOnPageLoad () {
+    await getCurrentLocation()
   }
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true)
-      try {
-        const currentWeather = await getCurrentWeather(
-          currentLatitude,
-          currentLongitude
-        )
-        const hourlyForecast = await getHourlyForecast(
-          currentLatitude,
-          currentLongitude
-        )
-        const weeklyForecast = await getWeeklyForecast(
-          currentLatitude,
-          currentLongitude
-        )
-        setCurrentWeatherData(currentWeather)
-        setHourlyForecastData(hourlyForecast)
-        setWeeklyWeatherData(weeklyForecast)
-        setIsLoading(false)
-      } catch (error) {
-        console.error(error)
-        setIsLoading(false)
-      }
-    }
-    fetchData()
-  }, [currentLatitude, currentLongitude])
-  useEffect(() => {
-    const getCurrentLocation = async () => {
-      setIsLoading(true)
-      try {
-        const position = await new Promise((resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(resolve, reject)
-          setHasLocationPermission(true)
-        })
-        setCurrentLatitude(position.coords.latitude)
-        setCurrentLongitude(position.coords.longitude)
-      } catch (error) {
-        setHasLocationPermission(false)
-        console.error(error)
-      }
-      setIsLoading(false)
-    }
-    getCurrentLocation()
-    if (!hasLocationPermission) {
-      setCurrentLatitude('44.436141') //Bucharest lat
-      setCurrentLongitude('26.10626') //Bucharest lon
-    }
+    runOnPageLoad()
   }, [])
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favList))
   }, [favList])
   return (
     <>
-      {isLoading ? (
+      {isLoading === true ? (
         <LoadingScreen />
       ) : (
-        <div className='h-screen bg-primary text-primaryText text-center flex flex-col justify-center items-center w-full px-10'>
+        <div className='h-screen bg-primary text-center flex flex-col justify-center items-center w-full'>
           <div className='flex item-center gap-1 mb-6'>
             <SearchInput onPlaceChanged={handlePlaceChanged} />
             <IconContext.Provider
@@ -152,9 +140,11 @@ function App () {
             </button>
           </div>
           <div
-            className={`flex ${
-              selectedOption === 'daily' && 'lg:justify-center'
-            } gap-2 overflow-auto w-5/6 mt-2`}
+            className={`flex
+            ${selectedOption === 'hourly' && 'w-11/12'}
+            ${
+              selectedOption === 'daily' && 'lg:justify-center w-5/6 '
+            } gap-2 overflow-auto   rounded-lg mt-2`}
           >
             {hourlyForecastData &&
               selectedOption === 'hourly' &&
@@ -184,24 +174,27 @@ function App () {
                     key={index}
                   >
                     <DailyForecast
+                      weatherDescription = {data.weather.description}
+                      statusCode={data.weather.code}
                       date={data.valid_date}
-                      temperature={data.temp}
-                      className='h-44 w-24 overflow-hidden'
+                      lowTemperature = {Math.round(data.low_temp)}
+                      highTemperature = {Math.round(data.high_temp)}
+                      className='h-44 w-36 overflow-hidden'
                     />
                   </div>
                 )
               })}
           </div>
+          <Modal
+            isOpen={isFavShown}
+            onClose={() => {
+              setIsFavShown(false)
+            }}
+          >
+            <FavList />
+          </Modal>
         </div>
       )}
-      <Modal
-        isOpen={isFavShown}
-        onClose={() => {
-          setIsFavShown(false)
-        }}
-      >
-        <FavList />
-      </Modal>
     </>
   )
 }

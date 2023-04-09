@@ -49,7 +49,7 @@ export function getWeeklyForecast (lat, lon) {
           lon
         }
       })
-      .then(response => resolve(response.data.data))
+      .then(response => resolve(response.data.data.slice(1,8)))
       .catch(error => {
         reject(error)
       })

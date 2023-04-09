@@ -16,27 +16,25 @@ export default function FavList () {
             {favList.length > 0 ? (
               <div className='flex flex-col gap-4 w-80'>
                 {favList.map((favorite, index) => (
-                  <>
-                    <div className='flex justify-between' key={index}>
-                      <FavItem
-                        favList={favList}
-                        lat={favorite.lat}
-                        lon={favorite.lon}
-                        cityName={favorite.cityName}
-                      />
-                      <IconContext.Provider
-                        value={{ className: 'text-2xl cursor-pointer' }}
+                  <div className='flex justify-between' key={index}>
+                    <FavItem
+                      favList={favList}
+                      lat={favorite.lat}
+                      lon={favorite.lon}
+                      cityName={favorite.cityName}
+                    />
+                    <IconContext.Provider
+                      value={{ className: 'text-2xl cursor-pointer' }}
+                    >
+                      <button
+                        onClick={() =>
+                          setFavList(favList.filter((fav, i) => i !== index))
+                        }
                       >
-                        <button
-                          onClick={() =>
-                            setFavList(favList.filter((fav, i) => i !== index))
-                          }
-                        >
-                          <TiDelete />
-                        </button>
-                      </IconContext.Provider>
-                    </div>
-                  </>
+                        <TiDelete />
+                      </button>
+                    </IconContext.Provider>
+                  </div>
                 ))}
               </div>
             ) : (

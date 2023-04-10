@@ -27,13 +27,12 @@ export default function CurrentWeather ({
   const favorite = isFavorite(cityName)
   return (
     <div className='flex flex-col items-center justify-center mb-4'>
-      <div className='flex items-center justify-center gap-1 align-middle mb-5'>
+      <div className='flex items-center justify-center gap-1 align-middle mb-3'>
         <p
           className={`text-gray-800 font-bold ${
             cityName.length < 8 && 'text-6xl'
-          } ${cityName.length > 7 && 'text-5xl'} ${
-            cityName.length > 13 && 'text-4xl'
-          }`}
+          } ${cityName.length > 7 && cityName.length < 13 && 'text-5xl'}
+          ${cityName.length > 13 && 'text-4xl'} `}
         >
           {cityName}
         </p>
@@ -60,7 +59,10 @@ export default function CurrentWeather ({
         />
       )}
 
-      <p className='text-gray-800 font-bold text-7xl' title='Temperature in °C'>
+      <p
+        className='text-gray-800 font-bold text-7xl mt-2'
+        title='Temperature in °C'
+      >
         {Math.round(temperature)}
         <span className='text-6xl'>°C</span>
       </p>

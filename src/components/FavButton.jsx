@@ -1,6 +1,12 @@
 import { IconContext } from 'react-icons'
 import { IoIosStarOutline, IoIosStar } from 'react-icons/io'
-export default function FavButton ({ lat, lon, cityName, isFavorite, onToggleFavorite }) {
+export default function FavButton ({
+  lat,
+  lon,
+  cityName,
+  isFavorite,
+  onToggleFavorite
+}) {
   function handleClick () {
     onToggleFavorite(lat, lon, cityName)
   }

@@ -40,12 +40,13 @@ export default function SearchInput ({ onPlaceChanged }) {
               place_id,
               structured_formatting: { main_text, secondary_text }
             } = suggestion
-
             return (
               <li
                 key={place_id}
                 onClick={() => handleSelect(main_text)}
-                className='px-4 py-2 cursor-pointer hover:bg-gray-100'
+                className={`px-4 py-2 cursor-pointer hover:bg-gray-100 w-80 md:w-96  ${
+                  data.slice(-1)[0].place_id !== place_id && 'border-b'
+                }`}
               >
                 <strong>{main_text}</strong> <small>{secondary_text}</small>
               </li>
@@ -65,7 +66,7 @@ export default function SearchInput ({ onPlaceChanged }) {
         disabled={!ready}
         placeholder='Search for any city'
         title='Search for any address'
-        className='border w-96 py-1 pl-4 pr-10 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-gray-300'
+        className='border w-80 md:w-96 mr-2 py-1 pl-4 pr-10 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-gray-300'
       />
       <ul className=''>{status === 'OK' && renderSuggestions()}</ul>
     </div>

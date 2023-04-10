@@ -14,38 +14,36 @@ export default function DailyForecast ({
   return (
     <>
       <div className={className}>
-        <p className='text-gray-800 font-bold text-lg mb-3'>
+        <div className='text-gray-800 font-bold text-lg mb-3'>
           {dayOfTheWeek} {day}/{month}
-        </p>
+        </div>
         <WeatherStatusCodeDay
           statusCode={statusCode}
           className='mb-2 h-12'
           title={weatherDescription}
         />
-        <p className=''> {weatherDescription}</p>
+        <div className='h-10'> {weatherDescription}</div>
         <div
-          className='flex bottom-0 gap-3 items-center justify-center'
+          className='flex bottom-0 gap-3 items-center justify-center font-medium w-full'
           title='7AM to 7PM'
         >
-          <p
-            className='text-gray-800 font-bold text-3xl mt-2'
+          <div
+            className='text-gray-800 text-3xl mt-2'
             title='Low Temperature'
           >
-            <span>
               <div>
                 {lowTemperature}
                 <span className='text-xl'>°C</span>
               </div>
-            </span>
-          </p>
+          </div>
 
-          <p
-            className='text-gray-800 font-bold text-3xl mt-2'
+          <div
+            className='text-gray-800  text-3xl mt-2'
             title='High Temperature'
           >
             {highTemperature}
             <span className='text-xl'>°C</span>
-          </p>
+          </div>
         </div>
       </div>
     </>

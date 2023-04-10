@@ -1,4 +1,11 @@
 import { useState, useEffect, useContext } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Mousewheel, Parallax } from 'swiper'
+import 'swiper/swiper.css'
+import 'swiper/css/scrollbar'
+import 'swiper/css/navigation'
+import 'swiper/css/mousewheel'
+import 'swiper/css/parallax'
 import { IconContext } from 'react-icons'
 import { TbClockHour4 } from 'react-icons/tb'
 import { RiEmotionSadLine } from 'react-icons/ri'
@@ -165,52 +172,99 @@ function App () {
               </IconContext.Provider>
             </button>
           </div>
-          <div
-            className={`flex
-          ${selectedOption === 'hourly' && 'w-11/12'}
-          ${
-            selectedOption === 'daily' && 'lg:justify-center w-5/6 '
-          } gap-2 overflow-auto   rounded-lg mt-2`}
-          >
-            {hourlyForecastData &&
-              selectedOption === 'hourly' &&
-              hourlyForecastData.map((data, index) => {
-                return (
-                  <div
-                    className='py-2 px-8 flex flex-col justify-center rounded-2xl border w-5/6'
-                    key={index}
-                  >
-                    <HourlyForecast
-                      weatherDescription={data.weather.description}
-                      statusCode={data.weather.code}
-                      localTimeStamp={data.timestamp_local}
-                      temperature={Math.round(data.temp)}
-                      partOfTheDay={data.pod}
-                      className='h-44 overflow-hidden'
-                    />
-                  </div>
-                )
-              })}
-            {weeklyWeatherData &&
-              selectedOption === 'daily' &&
-              weeklyWeatherData.map((data, index) => {
-                return (
-                  <div
-                    className='p-2 flex flex-col justify-center rounded-2xl border'
-                    key={index}
-                  >
-                    <DailyForecast
-                      weatherDescription={data.weather.description}
-                      statusCode={data.weather.code}
-                      date={data.valid_date}
-                      lowTemperature={Math.round(data.low_temp)}
-                      highTemperature={Math.round(data.high_temp)}
-                      className='h-44 w-36 overflow-hidden'
-                    />
-                  </div>
-                )
-              })}
+          <div className={`flex justify-center w-11/12 gap-2 rounded-lg mt-2`}>
+            <Swiper
+              modules={[Mousewheel, Parallax]}
+              mousewheel={true}
+              parallax={true}
+              initialSlide={0}
+              spaceBetween={12}
+              breakpoints={{
+                320: {
+                  slidesPerView: 2
+                },
+                480: {
+                  slidesPerView: 3
+                },
+                640: {
+                  slidesPerView: 4
+                },
+                768: {
+                  slidesPerView: 5
+                },
+                1024: {
+                  slidesPerView: 7
+                }
+              }}
+            >
+              {hourlyForecastData &&
+                selectedOption === 'hourly' &&
+                hourlyForecastData.map((data, index) => {
+                  return (
+                    <SwiperSlide key={index}>
+                      <div className='py-2 px-8 flex flex-col justify-center rounded-2xl border'>
+                        <HourlyForecast
+                          weatherDescription={data.weather.description}
+                          statusCode={data.weather.code}
+                          localTimeStamp={data.timestamp_local}
+                          temperature={Math.round(data.temp)}
+                          partOfTheDay={data.pod}
+                          className='h-44 overflow-hidden'
+                        />
+                      </div>
+                    </SwiperSlide>
+                  )
+                })}
+            </Swiper>
           </div>
+
+          <div className={`flex justify-center w-11/12  gap-2 rounded-lg mt-2`}>
+            <Swiper
+              slidesPerView={2}
+              modules={[Mousewheel, Parallax]}
+              mousewheel={true}
+              parallax={true}
+              initialSlide={0}
+              spaceBetween={12}
+              breakpoints={{
+                320: {
+                  slidesPerView: 2
+                },
+                480: {
+                  slidesPerView: 3
+                },
+                640: {
+                  slidesPerView: 4
+                },
+                768: {
+                  slidesPerView: 5
+                },
+                1024: {
+                  slidesPerView: 7
+                }
+              }}
+            >
+              {weeklyWeatherData &&
+                selectedOption === 'daily' &&
+                weeklyWeatherData.map((data, index) => {
+                  return (
+                    <SwiperSlide key={index}>
+                      <div className=' w-full py-2 flex flex-col justify-center rounded-2xl border'>
+                        <DailyForecast
+                          weatherDescription={data.weather.description}
+                          statusCode={data.weather.code}
+                          date={data.valid_date}
+                          lowTemperature={Math.round(data.low_temp)}
+                          highTemperature={Math.round(data.high_temp)}
+                          className='h-44'
+                        />
+                      </div>
+                    </SwiperSlide>
+                  )
+                })}
+            </Swiper>
+          </div>
+
           <Modal
             isOpen={isFavShown}
             onClose={() => {

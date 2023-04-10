@@ -18,18 +18,18 @@ export default function HourlyForecast ({
         {partOfTheDay === 'd' ? (
           <WeatherStatusCodeDay
             statusCode={statusCode}
-            className='mb-2'
+            className='mb-2 h-12'
             title={weatherDescription}
           />
         ) : (
           <WeatherStatusCodeNight
             statusCode={statusCode}
-            className='mb-2'
+            className='mb-2 h-12'
             title={weatherDescription}
           />
         )}
-        <div className='w-24 h-10 leading-5'> {weatherDescription} </div>
-        <p className='text-gray-800 font-bold text-3xl mt-2'>
+        <div className=' h-8 leading-5'> {weatherDescription} </div>
+        <p className='text-gray-800 font-medium text-3xl mt-2'>
           {temperature}
           <span className='text-xl'>°C</span>
         </p>

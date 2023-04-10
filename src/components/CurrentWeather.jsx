@@ -32,7 +32,7 @@ export default function CurrentWeather ({
           className={`text-gray-800 font-bold ${
             cityName.length < 8 && 'text-6xl'
           } ${cityName.length > 7 && cityName.length < 13 && 'text-5xl'}
-          ${cityName.length > 13 && 'text-4xl'} `}
+          ${cityName.length >= 13 && 'text-4xl'} `}
         >
           {cityName}
         </p>

@@ -17,7 +17,7 @@ export default function FavItem ({ favList, lat, lon, cityName }) {
   }, [favList])
   return (
     <div className='flex justify-between items-center gap-9 mr-12'>
-      <p className='w-24'>{cityName}</p>
+      <p className='w-28 text-left'>{cityName}</p>
       {favItemWeatherData && (
         <div className='flex gap-1 items-center'>
           <p>{Math.round(favItemWeatherData.temp)}°C</p>

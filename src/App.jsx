@@ -23,6 +23,7 @@ import DailyForecast from './components/DailyForecast'
 import Modal from './components/Modal'
 import FavList from './components/FavList'
 import SearchInput from './components/SearchInput'
+import { isMobile } from 'react-device-detect'
 import {
   getCurrentWeather,
   getHourlyForecast,
@@ -110,7 +111,11 @@ function App () {
       ) : (
         <div className='h-screen bg-primary text-center flex flex-col justify-center items-center w-screen'>
           <div className='mr-3 ml-3'>
-            <div className='flex item-center mb-6 justify-center w-full'>
+            <div
+              className={`flex item-center mb-6 justify-center w-full ${
+                isMobile && '-mt-12'
+              }`}
+            >
               <SearchInput onPlaceChanged={handlePlaceChanged} />
               <IconContext.Provider
                 value={{ className: 'text-3xl text-gray-400 cursor-pointer' }}

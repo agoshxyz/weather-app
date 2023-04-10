@@ -1,5 +1,6 @@
 import { IconContext } from 'react-icons'
 import { IoIosStarOutline, IoIosStar } from 'react-icons/io'
+import { isMobile } from 'react-device-detect'
 export default function FavButton ({
   lat,
   lon,
@@ -13,7 +14,9 @@ export default function FavButton ({
   return (
     <>
       <IconContext.Provider
-        value={{ className: 'text-gray-800 text-4xl mt-2' }}
+        value={{
+          className: `text-gray-800 text-4xl ${isMobile ? 'mt-0' : 'mt-2'}`
+        }}
       >
         <button
           onClick={handleClick}

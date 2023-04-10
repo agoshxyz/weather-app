@@ -1,7 +1,7 @@
 export default function LoadingScreen () {
   return (
     <div className='flex gap-2 justify-center h-screen animate-pulse'>
-      <div className='flex items-center gap-2 justify-center text-4xl font-semibold text-gray-700'>
+      <div className='flex items-center gap-2 justify-center text-4xl font-medium text-gray-700'>
         <svg
           className='animate-spin h-12 w-12 text-gray-700'
           xmlns='http://www.w3.org/2000/svg'

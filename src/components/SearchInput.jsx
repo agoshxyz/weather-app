@@ -25,7 +25,7 @@ export default function SearchInput ({ onPlaceChanged }) {
 
     try {
       const results = await getGeocode({ address: description })
-      const { lat, lng } = await getLatLng(results[0])
+      const { lat, lng } = getLatLng(results[0])
       onPlaceChanged(lat, lng)
     } catch (error) {
       console.error('Error: ', error)

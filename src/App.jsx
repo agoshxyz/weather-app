@@ -189,7 +189,7 @@ function App () {
                 hourlyForecastData.map((data, index) => {
                   return (
                     <SwiperSlide key={index}>
-                      <div className='py-2  flex flex-col justify-center rounded-2xl border'>
+                      <div className='py-2 px-1 flex flex-col justify-center rounded-2xl border'>
                         <HourlyForecast
                           weatherDescription={data.weather.description}
                           statusCode={data.weather.code}
@@ -235,7 +235,7 @@ function App () {
                 weeklyWeatherData.map((data, index) => {
                   return (
                     <SwiperSlide key={index}>
-                      <div className=' w-full py-2 flex flex-col justify-center rounded-2xl border'>
+                      <div className='w-full py-2 px-1 flex flex-col justify-center rounded-2xl border'>
                         <DailyForecast
                           weatherDescription={data.weather.description}
                           statusCode={data.weather.code}

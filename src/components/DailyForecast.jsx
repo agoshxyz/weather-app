@@ -14,7 +14,7 @@ export default function DailyForecast ({
   return (
     <>
       <div className={className}>
-        <time className='text-gray-800 font-bold text-lg mb-3'>
+        <time className='text-gray-800 font-bold text-lg mb-3 block'>
           {dayOfTheWeek} {day}/{month}
         </time>
         <WeatherStatusCodeDay

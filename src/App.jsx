@@ -242,7 +242,7 @@ function App () {
                           date={data.valid_date}
                           minTemperature={Math.round(data.min_temp)}
                           maxTemperature={Math.round(data.max_temp)}
-                          className='h-44'
+                          className='h-48 md:h-44'
                         />
                       </div>
                     </SwiperSlide>

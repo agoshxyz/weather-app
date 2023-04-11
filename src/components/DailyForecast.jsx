@@ -24,36 +24,36 @@ export default function DailyForecast ({
         />
         <h3 className='h-8'> {weatherDescription}</h3>
         <div
-          className='flex bottom-0 gap-3 items-center justify-center font-medium w-full'
+          className='flex bottom-0 gap-2 md:gap-3 items-center justify-center font-mediu mt-2'
           title='From Midnight to Midnight'
         >
           <div
             className={`text-gray-600 ${
-              minTemperature || maxTemperature < 0 ? 'text-2xl' : 'text-3xl'
+              minTemperature || maxTemperature < 0 ? 'text-xl' : 'text-2xl'
             }   mt-2`}
             title='Min Temperature'
           >
-            <p className='leading-5'>
+            <div className='leading-3'>
               {minTemperature}
-              <div className='inline leading-8'>
+              <div className='inline leading-3'>
                 <span className='text-lg lead'>°C</span>
                 <sup className='text-xs leading-3 inline'>min</sup>
               </div>
-            </p>
+            </div>
           </div>
           <div
             className={`text-gray-700 ${
-              minTemperature || maxTemperature < 0 ? 'text-2xl' : 'text-3xl'
-            }  mt-2`}
+              minTemperature || maxTemperature < 0 ? 'text-xl' : 'text-2xl'
+            }   mt-2`}
             title='Min Temperature'
           >
-            <p className='leading-5'>
+            <div className='leading-3'>
               {maxTemperature}
-              <div className='inline leading-8'>
-                <span className='text-lg lead'>°C</span>
+              <div className='inline leading-3'>
+                <span className='text-lg leading-3'>°C</span>
                 <sup className='text-xs leading-3 inline'>max</sup>
               </div>
-            </p>
+            </div>
           </div>
         </div>
       </div>

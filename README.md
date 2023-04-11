@@ -1,7 +1,10 @@
 # Weather App for Technical Evaluation
 Live URL
  [https://cumevremea.xyz](http://cumevremea.xyz)
- 
+
+## Demo
+
+![Demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGJkNDU1ODg3Y2UyNGYyM2NiYzg2OWQ3ZjdmOTFjNzBlNjc4Yzk0MSZjdD1n/f23lQwIx98qESFYYPt/giphy.gif) 
 ## Features
 - Current city weather
 - Search for address (airport, city etc.)

@@ -24,7 +24,7 @@ export default function DailyForecast ({
         />
         <h3 className='h-8'> {weatherDescription}</h3>
         <div
-          className='flex bottom-0 gap-4 items-center justify-center font-medium w-full'
+          className='flex bottom-0 gap-3 items-center justify-center font-medium w-full'
           title='From Midnight to Midnight'
         >
           <div

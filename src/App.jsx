@@ -235,7 +235,7 @@ function App () {
                 weeklyWeatherData.map((data, index) => {
                   return (
                     <SwiperSlide key={index}>
-                      <div className='w-full py-2 px-1 flex flex-col justify-center rounded-2xl border'>
+                      <div className='w-full py-2 px-2 flex flex-col justify-center rounded-2xl border'>
                         <DailyForecast
                           weatherDescription={data.weather.description}
                           statusCode={data.weather.code}

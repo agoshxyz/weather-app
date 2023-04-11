@@ -28,14 +28,14 @@ export default function CurrentWeather ({
   return (
     <div className='flex flex-col items-center justify-center mb-4'>
       <div className='flex items-center justify-center gap-1 align-middle mb-3'>
-        <p
+        <h2
           className={`text-gray-800 font-bold ${
             cityName.length < 8 && 'text-6xl'
           } ${cityName.length > 7 && cityName.length < 13 && 'text-5xl'}
           ${cityName.length >= 13 && 'text-4xl'} `}
         >
           {cityName}
-        </p>
+        </h2>
         <FavButton
           lat={lat}
           lon={lon}
@@ -70,7 +70,7 @@ export default function CurrentWeather ({
         Feels like {Math.round(temperatureFeelsLike)}
         <span>°C</span>
       </p>
-      <p className='text-gray-800 font-bold text-xl'>{description}</p>
+      <h3 className='text-gray-800 font-bold text-xl'>{description}</h3>
     </div>
   )
 }

@@ -13,7 +13,7 @@ export default function HourlyForecast ({
   return (
     <>
       <div className={className}>
-        <div className='mb-4 font-bold text-xl'>{hour}</div>
+        <time className='mb-4 font-bold text-xl block'>{hour}</time>
 
         {partOfTheDay === 'd' ? (
           <WeatherStatusCodeDay
@@ -28,7 +28,7 @@ export default function HourlyForecast ({
             title={weatherDescription}
           />
         )}
-        <div className=' h-8 leading-5'> {weatherDescription} </div>
+        <h3 className=' h-8 leading-5'> {weatherDescription} </h3>
         <p className='text-gray-800 font-medium text-3xl mt-2'>
           {temperature}
           <span className='text-xl'>°C</span>

@@ -14,8 +14,6 @@ import {
   MdBookmarkBorder,
   MdBookmark
 } from 'react-icons/md'
-import { TbCurrentLocation } from 'react-icons/tb'
-import { BiCurrentLocation } from 'react-icons/bi'
 import { BsCalendarDay } from 'react-icons/bs'
 import { WeatherContext } from './contexts/WeatherContext'
 import LoadingScreen from './components/LoadingScreen'
@@ -95,7 +93,7 @@ function App () {
       ) : (
         <div className='h-screen bg-primary text-center flex flex-col justify-center items-center w-screen'>
           <div className='mr-3 ml-3'>
-            <div
+            <section
               className={`flex item-center mb-6 justify-center w-full ${
                 isMobile && '-mt-12'
               }`}
@@ -113,9 +111,9 @@ function App () {
                   {favList.length === 0 ? <MdBookmarkBorder /> : <MdBookmark />}
                 </button>
               </IconContext.Provider>
-            </div>
+            </section>
           </div>
-          <div className='w-96 rounded-2xl'>
+          <section className='w-96 rounded-2xl'>
             {currentWeatherData && (
               <CurrentWeather
                 favList={favList}
@@ -130,7 +128,7 @@ function App () {
                 partOfTheDay={currentWeatherData.pod}
               />
             )}
-          </div>
+          </section>
           <div className='flex items-center justify-center mb-2 mt-2 w-52 text-center '>
             <button
               className={`flex flex-row items-center justify-center text-center rounded-l-lg py-1 px-4 w-1/2 transition ${
@@ -252,7 +250,6 @@ function App () {
                 })}
             </Swiper>
           </div>
-
           <Modal
             isOpen={isFavShown}
             onClose={() => {

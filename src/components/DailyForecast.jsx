@@ -4,8 +4,8 @@ export default function DailyForecast ({
   weatherDescription,
   statusCode,
   date,
-  lowTemperature,
-  highTemperature,
+  minTemperature,
+  maxTemperature,
   className
 }) {
   let dayOfTheWeek = moment(date).format('ddd')
@@ -22,25 +22,37 @@ export default function DailyForecast ({
           className='mb-2 h-12'
           title={weatherDescription}
         />
-        <h3 className='h-10'> {weatherDescription}</h3>
+        <h3 className='h-8'> {weatherDescription}</h3>
         <div
-          className='flex bottom-0 gap-3 items-center justify-center font-medium w-full'
-          title='7AM to 7PM'
+          className='flex bottom-0 gap-4 items-center justify-center font-medium w-full'
+          title='From Midnight to Midnight'
         >
-          <div className='text-gray-800 text-3xl mt-2' title='Low Temperature'>
-            <p>
-              {lowTemperature}
-              <span className='text-xl'>°C</span>
+          <div
+            className={`text-gray-600 ${
+              minTemperature || maxTemperature < 0 ? 'text-2xl' : 'text-3xl'
+            }   mt-2`}
+            title='Min Temperature'
+          >
+            <p className='leading-5'>
+              {minTemperature}
+              <div className='inline leading-8'>
+                <span className='text-lg lead'>°C</span>
+                <sup className='text-xs leading-3 inline'>min</sup>
+              </div>
             </p>
           </div>
-
           <div
-            className='text-gray-800  text-3xl mt-2'
-            title='High Temperature'
+            className={`text-gray-700 ${
+              minTemperature || maxTemperature < 0 ? 'text-2xl' : 'text-3xl'
+            }  mt-2`}
+            title='Min Temperature'
           >
-            <p>
-              {highTemperature}
-              <span className='text-xl'>°C</span>
+            <p className='leading-5'>
+              {maxTemperature}
+              <div className='inline leading-8'>
+                <span className='text-lg lead'>°C</span>
+                <sup className='text-xs leading-3 inline'>max</sup>
+              </div>
             </p>
           </div>
         </div>

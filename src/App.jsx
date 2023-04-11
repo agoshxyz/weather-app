@@ -240,8 +240,8 @@ function App () {
                           weatherDescription={data.weather.description}
                           statusCode={data.weather.code}
                           date={data.valid_date}
-                          lowTemperature={Math.round(data.low_temp)}
-                          highTemperature={Math.round(data.high_temp)}
+                          minTemperature={Math.round(data.min_temp)}
+                          maxTemperature={Math.round(data.max_temp)}
                           className='h-44'
                         />
                       </div>

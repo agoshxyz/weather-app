@@ -189,7 +189,7 @@ function App () {
                 hourlyForecastData.map((data, index) => {
                   return (
                     <SwiperSlide key={index}>
-                      <div className='py-2 px-1 flex flex-col justify-center rounded-2xl border'>
+                      <div className='py-2 px-1 flex flex-col justify-center rounded-2xl border cursor-grab'>
                         <HourlyForecast
                           weatherDescription={data.weather.description}
                           statusCode={data.weather.code}
@@ -204,7 +204,9 @@ function App () {
                 })}
             </Swiper>
           </div>
-          <div className={`flex justify-center w-11/12  gap-2 rounded-lg mt-2`}>
+          <div
+            className={`flex justify-center w-11/12  gap-2 rounded-lg mt-2 cursor-grab`}
+          >
             <Swiper
               slidesPerView={2}
               modules={[Mousewheel, Parallax]}

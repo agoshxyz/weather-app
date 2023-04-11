@@ -58,6 +58,11 @@ To build the app for production, run:
  ```sh
 yarn build
 ```
+## Run Tests
+ ```sh
+yarn cypress
+```
+
 This will create a production-ready build of the app in the dist directory.
 ### Environment Variables
 If you would like to generate your own API keys:
@@ -65,4 +70,3 @@ If you would like to generate your own API keys:
 VITE_WEATHERBIT_API_KEY - Get your own Weatherbit API key from https://www.weatherbit.io
 
 VITE_MAPS_API_KEY - Get your own Google Maps API key from https://developers.google.com/maps
-

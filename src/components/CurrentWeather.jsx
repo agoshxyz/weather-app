@@ -33,6 +33,7 @@ export default function CurrentWeather ({
             cityName.length < 8 && 'text-6xl'
           } ${cityName.length > 7 && cityName.length < 13 && 'text-5xl'}
           ${cityName.length >= 13 && 'text-4xl'} `}
+          data-cy='city-name'
         >
           {cityName}
         </h2>

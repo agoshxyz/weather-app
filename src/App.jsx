@@ -14,6 +14,8 @@ import {
   MdBookmarkBorder,
   MdBookmark
 } from 'react-icons/md'
+import { TbCurrentLocation } from 'react-icons/tb'
+import { BiCurrentLocation } from 'react-icons/bi'
 import { BsCalendarDay } from 'react-icons/bs'
 import { WeatherContext } from './contexts/WeatherContext'
 import LoadingScreen from './components/LoadingScreen'
@@ -24,40 +26,23 @@ import Modal from './components/Modal'
 import FavList from './components/FavList'
 import SearchInput from './components/SearchInput'
 import { isMobile } from 'react-device-detect'
-import {
-  getCurrentWeather,
-  getHourlyForecast,
-  getWeeklyForecast
-} from './api/weatherbit'
 function App () {
-  const [isLoading, setIsLoading] = useState(true)
-  const [isError, setIsError] = useState(false)
   const [hasLocationPermission, setHasLocationPermission] = useState(false)
-  const [isFavShown, setIsFavShown] = useState(false)
-  const [currentLatitude, setCurrentLatitude] = useState(null)
-  const [currentLongitude, setCurrentLongitude] = useState(null)
-  const [currentWeatherData, setCurrentWeatherData] = useState(null)
-  const [weeklyWeatherData, setWeeklyWeatherData] = useState(null)
-  const [hourlyForecastData, setHourlyForecastData] = useState(null)
   const [selectedOption, setSelectedOption] = useState('hourly')
-  const { favList, setFavList } = useContext(WeatherContext)
-  const fetchWeatherData = async (lat, lon) => {
-    setCurrentLatitude(lat)
-    setCurrentLongitude(lon)
-    try {
-      const currentWeather = await getCurrentWeather(lat, lon)
-      const hourlyForecast = await getHourlyForecast(lat, lon)
-      const weeklyForecast = await getWeeklyForecast(lat, lon)
-      setCurrentWeatherData(currentWeather)
-      setHourlyForecastData(hourlyForecast)
-      setWeeklyWeatherData(weeklyForecast)
-      setIsLoading(false)
-    } catch (error) {
-      setIsError(true)
-      setIsLoading(false)
-      console.error(error)
-    }
-  }
+  const {
+    favList,
+    setFavList,
+    isLoading,
+    isError,
+    setCurrentLatitude,
+    setCurrentLongitude,
+    currentWeatherData,
+    hourlyForecastData,
+    weeklyWeatherData,
+    fetchWeatherData,
+    isFavShown,
+    setIsFavShown
+  } = useContext(WeatherContext)
   const handlePlaceChanged = (lat, lng) => {
     setCurrentLatitude(lat)
     setCurrentLongitude(lng)
@@ -69,7 +54,6 @@ function App () {
         navigator.geolocation.getCurrentPosition(resolve, reject)
         setHasLocationPermission(true)
       })
-
       fetchWeatherData(position.coords.latitude, position.coords.longitude)
     } catch (error) {
       setHasLocationPermission(false)
@@ -207,7 +191,7 @@ function App () {
                 hourlyForecastData.map((data, index) => {
                   return (
                     <SwiperSlide key={index}>
-                      <div className='py-2 px-8 flex flex-col justify-center rounded-2xl border'>
+                      <div className='py-2  flex flex-col justify-center rounded-2xl border'>
                         <HourlyForecast
                           weatherDescription={data.weather.description}
                           statusCode={data.weather.code}
@@ -222,7 +206,6 @@ function App () {
                 })}
             </Swiper>
           </div>
-
           <div className={`flex justify-center w-11/12  gap-2 rounded-lg mt-2`}>
             <Swiper
               slidesPerView={2}
